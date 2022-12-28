@@ -1,6 +1,6 @@
 using System;
 
-namespace SilkNetConvenience; 
+namespace SilkNetConvenience.CreateInfo; 
 
 public class InstanceCreateInformation {
 	public ApplicationInformation ApplicationInfo = new();

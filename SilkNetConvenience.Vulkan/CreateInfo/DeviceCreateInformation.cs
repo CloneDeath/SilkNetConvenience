@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience; 
+namespace SilkNetConvenience.CreateInfo; 
 
 public class DeviceCreateInformation {
 	public string[] EnabledLayerNames = Array.Empty<string>();

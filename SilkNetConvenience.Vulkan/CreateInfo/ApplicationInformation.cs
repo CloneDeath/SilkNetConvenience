@@ -1,6 +1,6 @@
 using Silk.NET.Core;
 
-namespace SilkNetConvenience; 
+namespace SilkNetConvenience.CreateInfo; 
 
 public class ApplicationInformation {
 	public string ApplicationName = string.Empty;

@@ -1,4 +1,4 @@
-namespace SilkNetConvenience; 
+namespace SilkNetConvenience.CreateInfo; 
 
 public class MemoryAllocateInformation {
 	public ulong AllocationSize;
