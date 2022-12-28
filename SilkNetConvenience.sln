@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilkNetConvenience.Vulkan", "SilkNetConvenience.Vulkan\SilkNetConvenience.Vulkan.csproj", "{AE609BB3-41DC-4099-A626-5E572345E052}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE609BB3-41DC-4099-A626-5E572345E052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE609BB3-41DC-4099-A626-5E572345E052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE609BB3-41DC-4099-A626-5E572345E052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE609BB3-41DC-4099-A626-5E572345E052}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
