@@ -9,10 +9,3 @@ public class ComputePipelineCreateInformation {
 	public Pipeline BasePipelineHandle;
 	public int BasePipelineIndex;
 }
-
-public class PipelineShaderStateCreateInformation {
-	public string Name = string.Empty;
-	public ShaderStageFlags Stage;
-	public PipelineShaderStageCreateFlags Flags;
-	public ShaderModule Module;
-}

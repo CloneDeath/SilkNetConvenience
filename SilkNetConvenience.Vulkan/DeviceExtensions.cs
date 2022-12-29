@@ -22,7 +22,7 @@ public static unsafe class DeviceExtensions {
 		return deviceMemory;
 	}
 
-	public static Silk.NET.Vulkan.Buffer CreateBuffer(this Vk vk, Device device, BufferCreateInformation bufferCreateInfo) {
+	public static Buffer CreateBuffer(this Vk vk, Device device, BufferCreateInformation bufferCreateInfo) {
 		fixed (uint* queueFamilyIndicesPointer = bufferCreateInfo.QueueFamilyIndices) {
 			var createInfo = new BufferCreateInfo {
 				SType = StructureType.BufferCreateInfo,
@@ -206,5 +206,37 @@ public static unsafe class DeviceExtensions {
 			DescriptorCount = c.DescriptorCount
 		}).ToArray();
 		vk.UpdateDescriptorSets(device, writes, copies);
+	}
+
+	public static void FreeMemory(this Vk vk, Device device, DeviceMemory memory) {
+		vk.FreeMemory(device, memory, null);
+	}
+
+	public static void DestroyBuffer(this Vk vk, Device device, Buffer buffer) {
+		vk.DestroyBuffer(device, buffer, null);
+	}
+
+	public static void DestroyDescriptorPool(this Vk vk, Device device, DescriptorPool descriptorPool) {
+		vk.DestroyDescriptorPool(device, descriptorPool, null);
+	}
+
+	public static void DestroyDescriptorSetLayout(this Vk vk, Device device, DescriptorSetLayout layout) {
+		vk.DestroyDescriptorSetLayout(device, layout, null);
+	}
+
+	public static void DestroyPipelineLayout(this Vk vk, Device device, PipelineLayout layout) {
+		vk.DestroyPipelineLayout(device, layout, null);
+	}
+
+	public static void DestroyShaderModule(this Vk vk, Device device, ShaderModule shaderModule) {
+		vk.DestroyShaderModule(device, shaderModule, null);
+	}
+
+	public static void DestroyPipeline(this Vk vk, Device device, Pipeline pipeline) {
+		vk.DestroyPipeline(device, pipeline, null);
+	}
+
+	public static void DestroyCommandPool(this Vk vk, Device device, CommandPool commandPool) {
+		vk.DestroyCommandPool(device, commandPool, null);
 	}
 }
