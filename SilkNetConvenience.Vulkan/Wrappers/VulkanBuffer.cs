@@ -10,6 +10,7 @@ public class VulkanBuffer : IDisposable {
 	private readonly Device _device;
 	public readonly Buffer Buffer;
 
+	public VulkanBuffer(BufferCreateInformation createInfo, VulkanDevice device) : this(createInfo, device.Device, device.Vk){}
 	public VulkanBuffer(BufferCreateInformation createInfo, Device device, Vk vk) {
 		_vk = vk;
 		_device = device;
