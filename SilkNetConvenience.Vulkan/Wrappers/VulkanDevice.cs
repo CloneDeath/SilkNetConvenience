@@ -30,4 +30,7 @@ public class VulkanDevice : IDisposable {
 
 	public VulkanDeviceMemory AllocateMemory(uint memoryTypeIndex, ulong size) => new(memoryTypeIndex, size, this);
 	public VulkanBuffer CreateBuffer(BufferCreateInformation createInfo) => new(createInfo, this);
+
+	public VulkanShaderModule CreateShaderModule(byte[] code) => new(code, this);
+	public VulkanShaderModule CreateShaderModule(ShaderModuleCreateInformation createInfo) => new(createInfo, this);
 }
