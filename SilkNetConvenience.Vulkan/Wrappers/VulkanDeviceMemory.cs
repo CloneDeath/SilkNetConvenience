@@ -4,26 +4,26 @@ using SilkNetConvenience.CreateInfo;
 
 namespace SilkNetConvenience.Wrappers;
 
-public class VulkanMemory : IDisposable {
-	public DeviceMemory Memory { get; }
+public class VulkanDeviceMemory : IDisposable {
+	private readonly Vk _vk;
+	private readonly Device _device;
+	public DeviceMemory DeviceMemory { get; }
 	public uint MemoryTypeIndex { get; }
 	public ulong Size { get; }
-	private readonly Device _device;
-	private readonly Vk _vk;
 
-	public VulkanMemory(uint memoryTypeIndex, ulong size, Device device, Vk vk) {
-		Memory = vk.AllocateMemory(device, new MemoryAllocateInformation {
+	public VulkanDeviceMemory(uint memoryTypeIndex, ulong size, Device device, Vk vk) {
+		_vk = vk;
+		_device = device;
+		DeviceMemory = vk.AllocateMemory(device, new MemoryAllocateInformation {
 			AllocationSize = size,
 			MemoryTypeIndex = memoryTypeIndex
 		});
 		MemoryTypeIndex = memoryTypeIndex;
 		Size = size;
-		_device = device;
-		_vk = vk;
 	}
 
 	#region IDisposable
-	~VulkanMemory() {
+	~VulkanDeviceMemory() {
 		FreeUnmanagedResources();
 	}
 
@@ -33,15 +33,15 @@ public class VulkanMemory : IDisposable {
 	}
 
 	private void FreeUnmanagedResources() {
-		_vk.FreeMemory(_device, Memory);
+		_vk.FreeMemory(_device, DeviceMemory);
 	}
 	#endregion
 
 	public Span<byte> MapMemory() {
-		return _vk.MapMemory(_device, Memory, 0, Size);
+		return _vk.MapMemory(_device, DeviceMemory, 0, Size);
 	}
 	
 	public void UnmapMemory() {
-		_vk.UnmapMemory(_device, Memory);
+		_vk.UnmapMemory(_device, DeviceMemory);
 	}
 }
