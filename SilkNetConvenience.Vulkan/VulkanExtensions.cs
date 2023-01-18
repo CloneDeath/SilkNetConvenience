@@ -26,6 +26,10 @@ public static unsafe class VulkanExtensions {
 			EnabledLayerCount = (uint)info.EnabledLayerNames.Length,
 			PpEnabledLayerNames = (byte**)SilkMarshal.StringArrayToPtr(info.EnabledLayerNames)
 		};
+		if (info.DebugUtilsMessengerCreateInfo != null) {
+			var debugInfo = info.DebugUtilsMessengerCreateInfo.GetCreateInfo();
+			instanceCreateInfo.PNext = &debugInfo;
+		}
 
 		try {
 			self.CreateInstance(instanceCreateInfo, null, out var instance).AssertSuccess();

@@ -4,15 +4,15 @@ using SilkNetConvenience.CreateInfo;
 
 namespace SilkNetConvenience.Wrappers;
 
-public class VulkanDeviceMemory : IDisposable {
+public class VulkanDeviceMemory : BaseVulkanWrapper {
 	private readonly Vk _vk;
 	private readonly Device _device;
 	public uint MemoryTypeIndex { get; }
 	public ulong Size { get; }
 	public DeviceMemory DeviceMemory { get; }
 
-	public VulkanDeviceMemory(uint memoryTypeIndex, ulong size, VulkanDevice device) : this(memoryTypeIndex, size, device.Device, device.Vk){}
-	public VulkanDeviceMemory(uint memoryTypeIndex, ulong size, Device device, Vk vk) {
+	public VulkanDeviceMemory(VulkanDevice device, uint memoryTypeIndex, ulong size) : this(device.Vk, device.Device, memoryTypeIndex, size){}
+	public VulkanDeviceMemory(Vk vk, Device device, uint memoryTypeIndex, ulong size) {
 		_vk = vk;
 		_device = device;
 		MemoryTypeIndex = memoryTypeIndex;
@@ -23,21 +23,10 @@ public class VulkanDeviceMemory : IDisposable {
 		});
 	}
 
-	#region IDisposable
-	~VulkanDeviceMemory() {
-		FreeUnmanagedResources();
-	}
-
-	public void Dispose() {
-		FreeUnmanagedResources();
-		GC.SuppressFinalize(this);
-	}
-
-	private void FreeUnmanagedResources() {
+	protected override void ReleaseVulkanResources() {
 		_vk.FreeMemory(_device, DeviceMemory);
 	}
-	#endregion
-
+	
 	public Span<byte> MapMemory() {
 		return _vk.MapMemory(_device, DeviceMemory, 0, Size);
 	}

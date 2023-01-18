@@ -1,35 +1,23 @@
-using System;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
 
 namespace SilkNetConvenience.Wrappers;
 
-public class VulkanShaderModule : IDisposable {
+public class VulkanShaderModule : BaseVulkanWrapper {
 	private readonly Vk _vk;
 	private readonly Device _device;
 	public readonly ShaderModule ShaderModule;
 	
-	public VulkanShaderModule(byte[] code, VulkanDevice device) : this(code, device.Device, device.Vk){}
-	public VulkanShaderModule(byte[] code, Device device, Vk vk) : this(new ShaderModuleCreateInformation{ Code = code}, device, vk){}
-	public VulkanShaderModule(ShaderModuleCreateInformation createInfo, VulkanDevice device) : this(createInfo, device.Device, device.Vk){}
-	public VulkanShaderModule(ShaderModuleCreateInformation createInfo, Device device, Vk vk) {
+	public VulkanShaderModule(VulkanDevice device, byte[] code) : this(device.Vk, device.Device, code){}
+	public VulkanShaderModule(Vk vk, Device device, byte[] code) : this(vk, device, new ShaderModuleCreateInformation{ Code = code}){}
+	public VulkanShaderModule(VulkanDevice device, ShaderModuleCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
+	public VulkanShaderModule(Vk vk, Device device, ShaderModuleCreateInformation createInfo) {
 		_vk = vk;
 		_device = device;
 		ShaderModule = vk.CreateShaderModule(_device, createInfo);
 	}
 
-	#region IDisposable
-	private void ReleaseUnmanagedResources() {
+	protected override void ReleaseVulkanResources() {
 		_vk.DestroyShaderModule(_device, ShaderModule);
 	}
-
-	public void Dispose() {
-		ReleaseUnmanagedResources();
-		GC.SuppressFinalize(this);
-	}
-
-	~VulkanShaderModule() {
-		ReleaseUnmanagedResources();
-	}
-	#endregion
 }

@@ -1,36 +1,24 @@
-using System;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
 
 namespace SilkNetConvenience.Wrappers; 
 
-public class VulkanDevice : IDisposable {
+public class VulkanDevice : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Device Device;
 	
-	public VulkanDevice(PhysicalDevice physicalDevice, DeviceCreateInformation createInfo, Vk vk) {
+	public VulkanDevice(Vk vk, PhysicalDevice physicalDevice, DeviceCreateInformation createInfo) {
 		Vk = vk;
 		Device = vk.CreateDevice(physicalDevice, createInfo);
 	}
-	
-	#region IDisposable
-	private void ReleaseUnmanagedResources() {
+
+	protected override void ReleaseVulkanResources() {
 		Vk.DestroyDevice(Device);
 	}
 
-	public void Dispose() {
-		ReleaseUnmanagedResources();
-		GC.SuppressFinalize(this);
-	}
+	public VulkanDeviceMemory AllocateMemory(uint memoryTypeIndex, ulong size) => new(this, memoryTypeIndex, size);
+	public VulkanBuffer CreateBuffer(BufferCreateInformation createInfo) => new(this, createInfo);
 
-	~VulkanDevice() {
-		ReleaseUnmanagedResources();
-	}
-	#endregion
-
-	public VulkanDeviceMemory AllocateMemory(uint memoryTypeIndex, ulong size) => new(memoryTypeIndex, size, this);
-	public VulkanBuffer CreateBuffer(BufferCreateInformation createInfo) => new(createInfo, this);
-
-	public VulkanShaderModule CreateShaderModule(byte[] code) => new(code, this);
-	public VulkanShaderModule CreateShaderModule(ShaderModuleCreateInformation createInfo) => new(createInfo, this);
+	public VulkanShaderModule CreateShaderModule(byte[] code) => new(this, code);
+	public VulkanShaderModule CreateShaderModule(ShaderModuleCreateInformation createInfo) => new(this, createInfo);
 }
