@@ -1,4 +1,6 @@
 using Silk.NET.Vulkan;
+using Silk.NET.Vulkan.Extensions.EXT;
+using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
 
 namespace SilkNetConvenience.Wrappers; 
@@ -16,4 +18,9 @@ public class VulkanInstance : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyInstance(Instance);
 	}
+
+	public ExtDebugUtils? GetDebugUtilsExtension() => Vk.GetDebugUtilsExtension(Instance);
+	public KhrSurface? GetKhrSurfaceExtension() => Vk.GetKhrSurfaceExtension(Instance);
+	public KhrSwapchain? GetKhrSwapchainExtension() => Vk.GetKhrSwapchainExtension(Instance);
+	public PhysicalDevice[] EnumeratePhysicalDevices() => Vk.EnumeratePhysicalDevices(Instance);
 }

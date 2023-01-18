@@ -208,6 +208,18 @@ public static unsafe class DeviceExtensions {
 		vk.UpdateDescriptorSets(device, writes, copies);
 	}
 
+	public static ImageView CreateImageView(this Vk vk, Device device, ImageViewCreateInformation createInfo) {
+		var info = createInfo.GetCreateInfo();
+		vk.CreateImageView(device, info, null, out var imageView).AssertSuccess();
+		return imageView;
+	}
+
+	public static RenderPass CreateRenderPass(this Vk vk, Device device, RenderPassCreateInformation createInfo) {
+		var info = createInfo.GetCreateInfo();
+		vk.CreateRenderPass(device, info, null, out var renderPass).AssertSuccess();
+		return renderPass;
+	}
+
 	public static void FreeMemory(this Vk vk, Device device, DeviceMemory memory) {
 		vk.FreeMemory(device, memory, null);
 	}

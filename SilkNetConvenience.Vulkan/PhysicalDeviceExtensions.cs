@@ -11,11 +11,16 @@ public static unsafe class PhysicalDeviceExtensions {
 		return Helpers.GetArray((ref uint len, QueueFamilyProperties* data) => vk.GetPhysicalDeviceQueueFamilyProperties(physicalDevice, ref len, data));
 	}
 	
+	public static ExtensionProperties[] EnumerateDeviceExtensionProperties(this Vk vk, PhysicalDevice physicalDevice, string? layerName = null) {
+		return Helpers.GetArray((ref uint len, ExtensionProperties* data)
+			=> vk.EnumerateDeviceExtensionProperties(physicalDevice, layerName, ref len, data));
+	}
+
 	public static PhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties(this Vk vk, PhysicalDevice physicalDevice) {
 		vk.GetPhysicalDeviceMemoryProperties(physicalDevice, out var memoryProperties);
 		return memoryProperties;
 	}
-
+	
 	public static Device CreateDevice(this Vk vk, PhysicalDevice physicalDevice, DeviceCreateInformation info) {
 		var enabledFeatures = info.EnabledFeatures;
 		var queueCreateInfos = info.QueueCreateInfos.Select(q => {
@@ -50,5 +55,4 @@ public static unsafe class PhysicalDeviceExtensions {
 			}
 		}
 	}
-
 }
