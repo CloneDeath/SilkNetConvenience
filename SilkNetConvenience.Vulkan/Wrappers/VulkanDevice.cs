@@ -38,4 +38,6 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public void WaitIdle() => Vk.DeviceWaitIdle(Device).AssertSuccess();
 
 	public VulkanDescriptorSetLayout CreateDescriptorSetLayout(DescriptorSetLayoutCreateInformation createInfo) => new(this, createInfo);
+
+	public VulkanCommandPool CreateCommandPool(CommandPoolCreateInformation createInfo) => new VulkanCommandPool(this, createInfo);
 }
