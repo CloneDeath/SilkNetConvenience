@@ -16,8 +16,4 @@ public static unsafe class InstanceExtensions {
 	public static KhrSurface? GetKhrSurfaceExtension(this Vk vk, Instance instance) {
 		return vk.TryGetInstanceExtension(instance, out KhrSurface extension) ? extension : null;
 	}
-	
-	public static KhrSwapchain? GetKhrSwapchainExtension(this Vk vk, Instance instance) {
-		return vk.TryGetInstanceExtension(instance, out KhrSwapchain extension) ? extension : null;
-	}
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.EXT;
 using Silk.NET.Vulkan.Extensions.KHR;
@@ -21,6 +22,7 @@ public class VulkanInstance : BaseVulkanWrapper {
 
 	public ExtDebugUtils? GetDebugUtilsExtension() => Vk.GetDebugUtilsExtension(Instance);
 	public KhrSurface? GetKhrSurfaceExtension() => Vk.GetKhrSurfaceExtension(Instance);
-	public KhrSwapchain? GetKhrSwapchainExtension() => Vk.GetKhrSwapchainExtension(Instance);
-	public PhysicalDevice[] EnumeratePhysicalDevices() => Vk.EnumeratePhysicalDevices(Instance);
+	public VulkanPhysicalDevice[] EnumeratePhysicalDevices() => Vk.EnumeratePhysicalDevices(Instance)
+		.Select(p => new VulkanPhysicalDevice(this, p))
+		.ToArray();
 }

@@ -18,11 +18,4 @@ public class VulkanContext : BaseVulkanWrapper {
 	public VulkanInstance CreateInstance(InstanceCreateInformation createInfo) => new(this, createInfo);
 
 	public LayerProperties[] EnumerateInstanceLayerProperties() => Vk.EnumerateInstanceLayerProperties();
-
-	public VulkanDevice CreateDevice(PhysicalDevice physicalDevice, DeviceCreateInformation createInfo) {
-		return new VulkanDevice(Vk, physicalDevice, createInfo);
-	}
-
-	public ExtensionProperties[] EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice) => Vk.EnumerateDeviceExtensionProperties(physicalDevice);
-	public QueueFamilyProperties[] GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice) => Vk.GetPhysicalDeviceQueueFamilyProperties(physicalDevice);
 }

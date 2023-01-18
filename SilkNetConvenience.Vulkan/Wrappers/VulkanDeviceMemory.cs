@@ -5,33 +5,46 @@ using SilkNetConvenience.CreateInfo;
 namespace SilkNetConvenience.Wrappers;
 
 public class VulkanDeviceMemory : BaseVulkanWrapper {
-	private readonly Vk _vk;
-	private readonly Device _device;
+	public readonly Vk Vk;
+	public readonly Device Device;
+	public readonly DeviceMemory DeviceMemory;
+
 	public uint MemoryTypeIndex { get; }
 	public ulong Size { get; }
-	public DeviceMemory DeviceMemory { get; }
 
-	public VulkanDeviceMemory(VulkanDevice device, uint memoryTypeIndex, ulong size) : this(device.Vk, device.Device, memoryTypeIndex, size){}
-	public VulkanDeviceMemory(Vk vk, Device device, uint memoryTypeIndex, ulong size) {
-		_vk = vk;
-		_device = device;
-		MemoryTypeIndex = memoryTypeIndex;
-		Size = size;
-		DeviceMemory = vk.AllocateMemory(device, new MemoryAllocateInformation {
-			AllocationSize = size,
-			MemoryTypeIndex = memoryTypeIndex
-		});
+	public VulkanDeviceMemory(VulkanDevice device, MemoryAllocateInformation allocInfo)
+		: this(device.Vk, device.Device, allocInfo){}
+	public VulkanDeviceMemory(VulkanDevice device, uint memoryTypeIndex, ulong size) 
+		: this(device.Vk, device.Device, memoryTypeIndex, size){}
+	public VulkanDeviceMemory(Vk vk, Device device, uint memoryTypeIndex, ulong size) 
+		: this(vk, device, new MemoryAllocateInformation{ MemoryTypeIndex = memoryTypeIndex, AllocationSize = size}) {}
+	public VulkanDeviceMemory(Vk vk, Device device, MemoryAllocateInformation allocInfo)
+	{
+		Vk = vk;
+		Device = device;
+		MemoryTypeIndex = allocInfo.MemoryTypeIndex;
+		Size = allocInfo.AllocationSize;
+		DeviceMemory = vk.AllocateMemory(device, allocInfo);
 	}
 
 	protected override void ReleaseVulkanResources() {
-		_vk.FreeMemory(_device, DeviceMemory);
+		Vk.FreeMemory(Device, DeviceMemory);
 	}
 	
-	public Span<byte> MapMemory() {
-		return _vk.MapMemory(_device, DeviceMemory, 0, Size);
+	
+	public Span<T> MapMemory<T>(ulong? offset = null, ulong? size = null) where T : unmanaged {
+		var offsetUsed = offset ?? 0;
+		var sizeUsed = size ?? (Size - offsetUsed);
+		return Vk.MapMemory<T>(Device, DeviceMemory, offsetUsed, sizeUsed);
+	}
+	
+	public Span<byte> MapMemory(ulong? offset = null, ulong? size = null) {
+		var offsetUsed = offset ?? 0;
+		var sizeUsed = size ?? (Size - offsetUsed);
+		return Vk.MapMemory(Device, DeviceMemory, offsetUsed, sizeUsed);
 	}
 	
 	public void UnmapMemory() {
-		_vk.UnmapMemory(_device, DeviceMemory);
+		Vk.UnmapMemory(Device, DeviceMemory);
 	}
 }

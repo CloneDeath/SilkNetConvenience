@@ -1,12 +1,17 @@
 using System.Linq;
 using Silk.NET.Core.Native;
 using Silk.NET.Vulkan;
+using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience; 
 
 public static unsafe class DeviceExtensions {
+	public static KhrSwapchain? GetKhrSwapchainExtension(this Vk vk, Instance instance, Device device) {
+		return vk.TryGetDeviceExtension(instance, device, out KhrSwapchain extension) ? extension : null;
+	}
+	
 	public static Queue GetDeviceQueue(this Vk vk, Device device, uint queueFamilyIndex, uint queueIndex) {
 		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out var queue);
 		return queue;

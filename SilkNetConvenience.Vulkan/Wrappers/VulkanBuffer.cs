@@ -6,23 +6,23 @@ using Buffer = Silk.NET.Vulkan.Buffer;
 namespace SilkNetConvenience.Wrappers; 
 
 public class VulkanBuffer : BaseVulkanWrapper {
-	private readonly Vk _vk;
-	private readonly Device _device;
+	public readonly Vk Vk;
+	public readonly Device Device;
 	public readonly Buffer Buffer;
 
 	public VulkanBuffer(VulkanDevice device, BufferCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
 	public VulkanBuffer(Vk vk, Device device, BufferCreateInformation createInfo) {
-		_vk = vk;
-		_device = device;
+		Vk = vk;
+		Device = device;
 		Buffer = vk.CreateBuffer(device, createInfo);
 	}
 	
 	protected override void ReleaseVulkanResources() {
-		_vk.DestroyBuffer(_device, Buffer);
+		Vk.DestroyBuffer(Device, Buffer);
 	}
 
 	public void BindMemory(VulkanDeviceMemory deviceMemory, ulong memoryOffset = 0) => BindMemory(deviceMemory.DeviceMemory, memoryOffset);
-	public void BindMemory(DeviceMemory deviceMemory, ulong memoryOffset = 0) {
-		_vk.BindBufferMemory(_device, Buffer, deviceMemory, memoryOffset).AssertSuccess();
-	}
+	public void BindMemory(DeviceMemory deviceMemory, ulong memoryOffset = 0) 
+		=> Vk.BindBufferMemory(Device, Buffer, deviceMemory, memoryOffset).AssertSuccess();
+	public MemoryRequirements GetMemoryRequirements() => Vk.GetBufferMemoryRequirements(Device, Buffer);
 }
