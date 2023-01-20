@@ -1,3 +1,4 @@
+using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
 
@@ -23,5 +24,16 @@ public class VulkanCommandPool : BaseVulkanWrapper {
 	
 	public VulkanCommandBuffer AllocateCommandBuffer(CommandBufferLevel level) {
 		return new VulkanCommandBuffer(this, level);
+	}
+
+	public VulkanCommandBuffer[] AllocateCommandBuffers(uint count, CommandBufferLevel level) {
+		var allocInfo = new CommandBufferAllocateInformation {
+			CommandPool = CommandPool,
+			CommandBufferCount = count,
+			Level = level
+		};
+
+		var buffers = Vk.AllocateCommandBuffers(Device, allocInfo);
+		return buffers.Select(b => new VulkanCommandBuffer(Vk, Device, CommandPool, b)).ToArray();
 	}
 }
