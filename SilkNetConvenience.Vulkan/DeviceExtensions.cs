@@ -183,10 +183,14 @@ public static unsafe class DeviceExtensions {
 	}
 
 	public static void UpdateDescriptorSets(this Vk vk, Device device, WriteDescriptorSetInfo[] writeInfos, CopyDescriptorSetInfo[] copyInfos) {
-		var writes = writeInfos.Select(w => {
-			fixed (DescriptorImageInfo* imageInfo = w.ImageInfo)
-			fixed (DescriptorBufferInfo* bufferInfo = w.BufferInfo)
-			fixed (BufferView* bufferView = w.TexelBufferView) {
+		var imageInfos = writeInfos.Select(w => w.ImageInfo).ToArray();
+		var bufferInfos = writeInfos.Select(w => w.BufferInfo).ToArray();
+		var bufferViews = writeInfos.Select(w => w.TexelBufferView).ToArray();
+
+		var writes = writeInfos.Select((w, i) => {
+			fixed (DescriptorImageInfo* imageInfo = imageInfos[i])
+			fixed (DescriptorBufferInfo* bufferInfo = bufferInfos[i])
+			fixed (BufferView* bufferView = bufferViews[i]) {
 				return new WriteDescriptorSet {
 					SType = StructureType.WriteDescriptorSet,
 					DstSet = w.DstSet,
@@ -211,6 +215,7 @@ public static unsafe class DeviceExtensions {
 			DescriptorCount = c.DescriptorCount
 		}).ToArray();
 		vk.UpdateDescriptorSets(device, writes, copies);
+		
 	}
 
 	public static ImageView CreateImageView(this Vk vk, Device device, ImageViewCreateInformation createInfo) {

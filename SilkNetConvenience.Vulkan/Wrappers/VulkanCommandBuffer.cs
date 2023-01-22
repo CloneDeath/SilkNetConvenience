@@ -1,6 +1,9 @@
+using System;
+using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.Exceptions;
+using Buffer = Silk.NET.Vulkan.Buffer;
 
 namespace SilkNetConvenience.Wrappers; 
 
@@ -96,4 +99,20 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 	}
 
 	public void EndRenderPass() => Vk.CmdEndRenderPass(CommandBuffer);
+
+	public void BindDescriptorSet(PipelineBindPoint bindPoint, PipelineLayout pipelineLayout, uint firstSet,
+		VulkanDescriptorSet descriptorSet, uint? dynamicOffset = null) {
+		var offsets = dynamicOffset.HasValue ? new uint[] { dynamicOffset.Value } : Array.Empty<uint>();
+		BindDescriptorSets(bindPoint, pipelineLayout, firstSet, new[] { descriptorSet }, offsets);
+	}
+	public void BindDescriptorSets(PipelineBindPoint pipelineBindPoint, PipelineLayout pipelineLayout, uint firstSet, 
+			VulkanDescriptorSet[] descriptorSets, uint[]? dynamicOffsets = null) {
+		var sets = descriptorSets.Select(s => s.DescriptorSet).ToArray();
+		BindDescriptorSets(pipelineBindPoint, pipelineLayout, firstSet, sets, dynamicOffsets);
+	}
+	public void BindDescriptorSets(PipelineBindPoint pipelineBindPoint, PipelineLayout pipelineLayout, uint firstSet, 
+			DescriptorSet[] descriptorSets, uint[]? dynamicOffsets = null) {
+		var offsets = dynamicOffsets ?? Array.Empty<uint>();
+		Vk.CmdBindDescriptorSets(CommandBuffer, pipelineBindPoint, pipelineLayout, firstSet, descriptorSets, offsets);
+	}
 }

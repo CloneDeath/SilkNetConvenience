@@ -10,8 +10,4 @@
       <PackageReference Include="Silk.NET.Vulkan.Extensions.EXT" Version="2.16.0" />
       <PackageReference Include="Silk.NET.Vulkan.Extensions.KHR" Version="2.16.0" />
     </ItemGroup>
-    <ItemGroup>
-      <Compile Remove="Wrappers\VulkanDescriptorSet.cs" />
-      <Compile Remove="Wrappers\VulkanDescriptorPool.cs" />
-    </ItemGroup>
 </Project>

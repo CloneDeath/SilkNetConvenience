@@ -1,3 +1,4 @@
+using System;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
@@ -39,5 +40,14 @@ public class VulkanDevice : BaseVulkanWrapper {
 
 	public VulkanDescriptorSetLayout CreateDescriptorSetLayout(DescriptorSetLayoutCreateInformation createInfo) => new(this, createInfo);
 
-	public VulkanCommandPool CreateCommandPool(CommandPoolCreateInformation createInfo) => new VulkanCommandPool(this, createInfo);
+	public VulkanCommandPool CreateCommandPool(CommandPoolCreateInformation createInfo) => new(this, createInfo);
+
+	public VulkanDescriptorPool CreateDescriptorPool(DescriptorPoolCreateInformation createInfo) => new(this, createInfo);
+
+	public void UpdateDescriptorSets(params WriteDescriptorSetInfo[] writeInfos)
+		=> UpdateDescriptorSets(writeInfos, Array.Empty<CopyDescriptorSetInfo>());
+	public void UpdateDescriptorSets(params CopyDescriptorSetInfo[] copyInfos) 
+		=> UpdateDescriptorSets(Array.Empty<WriteDescriptorSetInfo>(), copyInfos);
+	public void UpdateDescriptorSets(WriteDescriptorSetInfo[] writeInfos, CopyDescriptorSetInfo[] copyInfos) 
+		=> Vk.UpdateDescriptorSets(Device, writeInfos, copyInfos);
 }
