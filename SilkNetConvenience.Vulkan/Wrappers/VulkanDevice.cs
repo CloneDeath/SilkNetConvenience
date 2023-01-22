@@ -50,4 +50,8 @@ public class VulkanDevice : BaseVulkanWrapper {
 		=> UpdateDescriptorSets(Array.Empty<WriteDescriptorSetInfo>(), copyInfos);
 	public void UpdateDescriptorSets(WriteDescriptorSetInfo[] writeInfos, CopyDescriptorSetInfo[] copyInfos) 
 		=> Vk.UpdateDescriptorSets(Device, writeInfos, copyInfos);
+
+	public VulkanImage CreateImage(ImageCreateInformation imageInfo) {
+		return new VulkanImage(this, imageInfo);
+	}
 }

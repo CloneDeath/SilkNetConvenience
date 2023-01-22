@@ -218,6 +218,16 @@ public static unsafe class DeviceExtensions {
 		
 	}
 
+	public static Image CreateImage(this Vk vk, Device device, ImageCreateInformation createInfo) {
+		var info = createInfo.GetCreateInfo();
+		vk.CreateImage(device, info, null, out var image).AssertSuccess();
+		return image;
+	}
+
+	public static void DestroyImage(this Vk vk, Device device, Image image) {
+		vk.DestroyImage(device, image, null);
+	}
+
 	public static ImageView CreateImageView(this Vk vk, Device device, ImageViewCreateInformation createInfo) {
 		var info = createInfo.GetCreateInfo();
 		vk.CreateImageView(device, info, null, out var imageView).AssertSuccess();

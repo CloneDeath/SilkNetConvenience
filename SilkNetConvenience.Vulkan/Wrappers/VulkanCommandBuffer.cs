@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
+using SilkNetConvenience.CreateInfo.Barriers;
 using SilkNetConvenience.Exceptions;
 using Buffer = Silk.NET.Vulkan.Buffer;
 
@@ -114,5 +115,32 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 			DescriptorSet[] descriptorSets, uint[]? dynamicOffsets = null) {
 		var offsets = dynamicOffsets ?? Array.Empty<uint>();
 		Vk.CmdBindDescriptorSets(CommandBuffer, pipelineBindPoint, pipelineLayout, firstSet, descriptorSets, offsets);
+	}
+
+	public void PipelineBarrier(PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, 
+		DependencyFlags dependencyFlags, params MemoryBarrierInformation[] memoryBarriers) {
+		PipelineBarrier(srcStageMask, dstStageMask, dependencyFlags, memoryBarriers,
+			Array.Empty<BufferMemoryBarrierInformation>(), Array.Empty<ImageMemoryBarrierInformation>());
+	}
+	
+	
+	public void PipelineBarrier(PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, 
+		DependencyFlags dependencyFlags, params BufferMemoryBarrierInformation[] bufferMemoryBarriers) {
+		PipelineBarrier(srcStageMask, dstStageMask, dependencyFlags, Array.Empty<MemoryBarrierInformation>(),
+			bufferMemoryBarriers, Array.Empty<ImageMemoryBarrierInformation>());
+	}
+	
+	
+	public void PipelineBarrier(PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, 
+		DependencyFlags dependencyFlags, params ImageMemoryBarrierInformation[] imageMemoryBarriers) {
+		PipelineBarrier(srcStageMask, dstStageMask, dependencyFlags, Array.Empty<MemoryBarrierInformation>(),
+			Array.Empty<BufferMemoryBarrierInformation>(), imageMemoryBarriers);
+	}
+	
+	public void PipelineBarrier(PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, 
+		DependencyFlags dependencyFlags, MemoryBarrierInformation[] memoryBarriers,
+		BufferMemoryBarrierInformation[] bufferMemoryBarriers, ImageMemoryBarrierInformation[] imageMemoryBarriers) {
+		Vk.CmdPipelineBarrier(CommandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarriers,
+			bufferMemoryBarriers, imageMemoryBarriers);
 	}
 }

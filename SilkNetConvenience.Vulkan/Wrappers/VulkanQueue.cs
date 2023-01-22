@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
@@ -26,5 +27,15 @@ public class VulkanQueue {
 
 	public void WaitIdle() {
 		Vk.QueueWaitIdle(Queue).AssertSuccess();
+	}
+	
+	public void SubmitSingleUseCommandBufferAndWaitIdle(VulkanCommandPool commandPool, Action<VulkanCommandBuffer> commands) {
+		using var buffer = commandPool.AllocateCommandBuffer(CommandBufferLevel.Primary);
+		buffer.Begin(CommandBufferUsageFlags.OneTimeSubmitBit);
+		commands(buffer);
+		buffer.End();
+
+		Submit(buffer);
+		WaitIdle();
 	}
 }
