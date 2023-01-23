@@ -1,5 +1,4 @@
 using Silk.NET.Vulkan;
-using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.CreateInfo.Images;
 
 namespace SilkNetConvenience.Wrappers; 
