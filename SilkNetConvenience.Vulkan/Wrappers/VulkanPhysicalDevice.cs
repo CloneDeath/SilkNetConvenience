@@ -20,4 +20,8 @@ public class VulkanPhysicalDevice {
 	public PhysicalDeviceMemoryProperties GetMemoryProperties() => Vk.GetPhysicalDeviceMemoryProperties(PhysicalDevice);
 
 	public VulkanDevice CreateDevice(DeviceCreateInformation createInfo) => new(this, createInfo);
+
+	public PhysicalDeviceProperties GetProperties() => Vk.GetPhysicalDeviceProperties(PhysicalDevice);
+
+	public PhysicalDeviceFeatures GetFeatures() => Vk.GetPhysicalDeviceFeatures(PhysicalDevice);
 }

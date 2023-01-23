@@ -1,6 +1,6 @@
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo; 
+namespace SilkNetConvenience.CreateInfo.Images; 
 
 public class ImageViewCreateInformation {
 	public Image Image;

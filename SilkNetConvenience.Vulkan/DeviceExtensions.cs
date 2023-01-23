@@ -3,6 +3,8 @@ using Silk.NET.Core.Native;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
+using SilkNetConvenience.CreateInfo.Descriptors;
+using SilkNetConvenience.CreateInfo.Images;
 using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience; 
@@ -216,6 +218,16 @@ public static unsafe class DeviceExtensions {
 		}).ToArray();
 		vk.UpdateDescriptorSets(device, writes, copies);
 		
+	}
+
+	public static Sampler CreateSampler(this Vk vk, Device device, SamplerCreateInformation createInfo) {
+		var info = createInfo.GetCreateInfo();
+		vk.CreateSampler(device, info, null, out var sampler).AssertSuccess();
+		return sampler;
+	}
+
+	public static void DestroySampler(this Vk vk, Device device, Sampler sampler) {
+		vk.DestroySampler(device, sampler, null);
 	}
 
 	public static Image CreateImage(this Vk vk, Device device, ImageCreateInformation createInfo) {

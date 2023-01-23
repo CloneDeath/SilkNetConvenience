@@ -1,7 +1,7 @@
 using System;
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo; 
+namespace SilkNetConvenience.CreateInfo.Images; 
 
 public class ImageCreateInformation {
 	public Extent3D Extent;

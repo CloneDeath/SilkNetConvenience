@@ -2,6 +2,8 @@ using System;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
+using SilkNetConvenience.CreateInfo.Descriptors;
+using SilkNetConvenience.CreateInfo.Images;
 using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience.Wrappers; 
@@ -51,7 +53,9 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public void UpdateDescriptorSets(WriteDescriptorSetInfo[] writeInfos, CopyDescriptorSetInfo[] copyInfos) 
 		=> Vk.UpdateDescriptorSets(Device, writeInfos, copyInfos);
 
-	public VulkanImage CreateImage(ImageCreateInformation imageInfo) {
-		return new VulkanImage(this, imageInfo);
-	}
+	public VulkanImage CreateImage(ImageCreateInformation imageInfo) => new(this, imageInfo);
+
+	public VulkanImageView CreateImageView(ImageViewCreateInformation viewInfo) => new(this, viewInfo);
+
+	public VulkanSampler CreateSampler(SamplerCreateInformation createInfo) => new(this, createInfo);
 }

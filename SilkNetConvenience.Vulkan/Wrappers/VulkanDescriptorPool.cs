@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
+using SilkNetConvenience.CreateInfo.Descriptors;
 
 namespace SilkNetConvenience.Wrappers; 
 

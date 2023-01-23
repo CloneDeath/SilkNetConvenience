@@ -7,6 +7,16 @@ using SilkNetConvenience.Exceptions;
 namespace SilkNetConvenience; 
 
 public static unsafe class PhysicalDeviceExtensions {
+	public static PhysicalDeviceProperties GetPhysicalDeviceProperties(this Vk vk, PhysicalDevice physicalDevice) {
+		vk.GetPhysicalDeviceProperties(physicalDevice, out var properties);
+		return properties;
+	}
+	
+	public static PhysicalDeviceFeatures GetPhysicalDeviceFeatures(this Vk vk, PhysicalDevice physicalDevice) {
+		vk.GetPhysicalDeviceFeatures(physicalDevice, out var features);
+		return features;
+	}
+	
 	public static QueueFamilyProperties[] GetPhysicalDeviceQueueFamilyProperties(this Vk vk, PhysicalDevice physicalDevice) {
 		return Helpers.GetArray((ref uint len, QueueFamilyProperties* data) => vk.GetPhysicalDeviceQueueFamilyProperties(physicalDevice, ref len, data));
 	}

@@ -1,6 +1,6 @@
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo;
+namespace SilkNetConvenience.CreateInfo.Descriptors;
 
 public class CopyDescriptorSetInfo {
 	public DescriptorSet SrcSet;

@@ -1,7 +1,7 @@
 using System;
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo;
+namespace SilkNetConvenience.CreateInfo.Descriptors;
 
 public class DescriptorSetLayoutCreateInformation {
 	public DescriptorSetLayoutCreateFlags Flags;
