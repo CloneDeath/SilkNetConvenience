@@ -143,4 +143,12 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 		Vk.CmdPipelineBarrier(CommandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarriers,
 			bufferMemoryBarriers, imageMemoryBarriers);
 	}
+
+	public void CopyBufferToImage(VulkanBuffer buffer, VulkanImage image, ImageLayout imageLayout, params BufferImageCopy[] regions) {
+		CopyBufferToImage(buffer.Buffer, image.Image, imageLayout, regions);
+	}
+	
+	public void CopyBufferToImage(Buffer buffer, Image image, ImageLayout imageLayout, params BufferImageCopy[] regions) {
+		Vk.CmdCopyBufferToImage(CommandBuffer, buffer, image, imageLayout, (uint)regions.Length, regions);
+	}
 }

@@ -28,7 +28,7 @@ public class VulkanQueue {
 	public void WaitIdle() {
 		Vk.QueueWaitIdle(Queue).AssertSuccess();
 	}
-	
+
 	public void SubmitSingleUseCommandBufferAndWaitIdle(VulkanCommandPool commandPool, Action<VulkanCommandBuffer> commands) {
 		using var buffer = commandPool.AllocateCommandBuffer(CommandBufferLevel.Primary);
 		buffer.Begin(CommandBufferUsageFlags.OneTimeSubmitBit);
