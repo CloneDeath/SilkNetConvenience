@@ -16,7 +16,7 @@ public static unsafe class QueueExtensions {
 			fixed (CommandBuffer* buffers = s.CommandBuffers)
 			fixed (Semaphore* signalSemaphores = s.SignalSemaphores)
 			fixed (Semaphore* waitSemaphores = s.WaitSemaphores)
-			fixed (PipelineStageFlags* stageFlags = s.PipelineStageFlags) {
+			fixed (PipelineStageFlags* waitDstStageMasks = s.WaitDstStageMask) {
 				return new SubmitInfo {
 					SType = StructureType.SubmitInfo,
 					CommandBufferCount = (uint)s.CommandBuffers.Length,
@@ -25,7 +25,7 @@ public static unsafe class QueueExtensions {
 					PSignalSemaphores = signalSemaphores,
 					WaitSemaphoreCount = (uint)s.WaitSemaphores.Length,
 					PWaitSemaphores = waitSemaphores,
-					PWaitDstStageMask = stageFlags
+					PWaitDstStageMask = waitDstStageMasks
 				};
 			}
 		}).ToArray();

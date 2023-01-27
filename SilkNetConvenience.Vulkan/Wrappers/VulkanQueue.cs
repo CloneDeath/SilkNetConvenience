@@ -17,6 +17,18 @@ public class VulkanQueue {
 		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out Queue);
 	}
 
+	public void Submit(SubmitInformation submitInfo, VulkanFence? fence = null) {
+		Submit(new[]{submitInfo}, fence?.Fence ?? default);
+	}
+	public void Submit(SubmitInformation submitInfo, Fence fence = default) {
+		Submit(new[]{submitInfo}, fence);
+	}
+	public void Submit(SubmitInformation[] submitInfos, VulkanFence? fence = null) {
+		Submit(submitInfos, fence?.Fence ?? default);
+	}
+	public void Submit(SubmitInformation[] submitInfos, Fence fence = default) {
+		Vk.QueueSubmit(Queue, submitInfos, fence);
+	}
 	public void Submit(params VulkanCommandBuffer[] commandBuffers) {
 		Vk.QueueSubmit(Queue, new SubmitInformation[] {
 			new() {

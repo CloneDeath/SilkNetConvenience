@@ -62,4 +62,7 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public VulkanRenderPass CreateRenderPass(RenderPassCreateInformation createInfo) => new(this, createInfo);
 
 	public VulkanFramebuffer CreateFramebuffer(FramebufferCreateInformation createInfo) => new(this, createInfo);
+
+	public VulkanSemaphore CreateSemaphore() => new(this);
+	public VulkanFence CreateFence(FenceCreateFlags flags = FenceCreateFlags.None) => new(this, flags);
 }
