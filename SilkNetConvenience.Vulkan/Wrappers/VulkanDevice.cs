@@ -11,6 +11,7 @@ namespace SilkNetConvenience.Wrappers;
 public class VulkanDevice : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Instance Instance;
+	public readonly PhysicalDevice PhysicalDevice;
 	public readonly Device Device;
 
 	public VulkanDevice(VulkanPhysicalDevice physicalDevice, DeviceCreateInformation createInfo) 
@@ -18,6 +19,7 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public VulkanDevice(Vk vk, Instance instance, PhysicalDevice physicalDevice, DeviceCreateInformation createInfo) {
 		Vk = vk;
 		Instance = instance;
+		PhysicalDevice = physicalDevice;
 		Device = vk.CreateDevice(physicalDevice, createInfo);
 	}
 
@@ -27,11 +29,26 @@ public class VulkanDevice : BaseVulkanWrapper {
 	
 	public KhrSwapchain? GetKhrSwapchainExtension() => Vk.GetKhrSwapchainExtension(Instance, Device);
 
+	public VulkanDeviceMemory AllocateMemoryFor(VulkanImage image, MemoryPropertyFlags flags) {
+		var memoryRequirements = image.GetMemoryRequirements();
+		return AllocateMemory(memoryRequirements, flags);
+	}
+	public VulkanDeviceMemory AllocateMemoryFor(VulkanBuffer buffer, MemoryPropertyFlags flags) {
+		var memoryRequirements = buffer.GetMemoryRequirements();
+		return AllocateMemory(memoryRequirements, flags);
+	}
+	public VulkanDeviceMemory AllocateMemory(MemoryRequirements requirements, MemoryPropertyFlags flags) {
+		return AllocateMemory(FindMemoryType(requirements.MemoryTypeBits, flags), requirements.Size);
+	}
+
 	public VulkanDeviceMemory AllocateMemory(MemoryAllocateInformation allocInfo) => new(this, allocInfo);
+
 	public VulkanDeviceMemory AllocateMemory(uint memoryTypeIndex, ulong size) => new(this, memoryTypeIndex, size);
+
 	public VulkanBuffer CreateBuffer(BufferCreateInformation createInfo) => new(this, createInfo);
 
 	public VulkanShaderModule CreateShaderModule(byte[] code) => new(this, code);
+
 	public VulkanShaderModule CreateShaderModule(ShaderModuleCreateInformation createInfo) => new(this, createInfo);
 
 	public VulkanQueue GetDeviceQueue(uint queueFamilyIndex, uint queueIndex) {
@@ -48,8 +65,10 @@ public class VulkanDevice : BaseVulkanWrapper {
 
 	public void UpdateDescriptorSets(params WriteDescriptorSetInfo[] writeInfos)
 		=> UpdateDescriptorSets(writeInfos, Array.Empty<CopyDescriptorSetInfo>());
+
 	public void UpdateDescriptorSets(params CopyDescriptorSetInfo[] copyInfos) 
 		=> UpdateDescriptorSets(Array.Empty<WriteDescriptorSetInfo>(), copyInfos);
+
 	public void UpdateDescriptorSets(WriteDescriptorSetInfo[] writeInfos, CopyDescriptorSetInfo[] copyInfos) 
 		=> Vk.UpdateDescriptorSets(Device, writeInfos, copyInfos);
 
@@ -64,5 +83,20 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public VulkanFramebuffer CreateFramebuffer(FramebufferCreateInformation createInfo) => new(this, createInfo);
 
 	public VulkanSemaphore CreateSemaphore() => new(this);
+
 	public VulkanFence CreateFence(FenceCreateFlags flags = FenceCreateFlags.None) => new(this, flags);
+
+	public PhysicalDeviceMemoryProperties GetMemoryProperties() => Vk.GetPhysicalDeviceMemoryProperties(PhysicalDevice);
+
+	private uint FindMemoryType(uint typeFilter, MemoryPropertyFlags properties) {
+		var memoryProperties = Vk.GetPhysicalDeviceMemoryProperties(PhysicalDevice);
+
+		for (var i = 0; i < memoryProperties.MemoryTypeCount; i++) {
+			var memType = memoryProperties.MemoryTypes[i];
+			if ((typeFilter & (1 << i)) != 0 && (memType.PropertyFlags & properties) == properties) {
+				return (uint)i;
+			}
+		}
+		throw new Exception("Failed to find a suitable memory location");
+	}
 }
