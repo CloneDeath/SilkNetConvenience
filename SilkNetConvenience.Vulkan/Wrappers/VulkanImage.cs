@@ -19,7 +19,7 @@ public class VulkanImage : BaseVulkanWrapper {
 	public VulkanImage(Vk vk, Device device, ImageCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;
-		Image = vk.CreateImage(device, createInfo);
+		Image = vk.CreateImage(device, createInfo);		
 	}
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyImage(Device, Image);

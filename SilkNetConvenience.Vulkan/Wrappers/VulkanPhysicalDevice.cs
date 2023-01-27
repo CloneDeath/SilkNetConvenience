@@ -24,4 +24,6 @@ public class VulkanPhysicalDevice {
 	public PhysicalDeviceProperties GetProperties() => Vk.GetPhysicalDeviceProperties(PhysicalDevice);
 
 	public PhysicalDeviceFeatures GetFeatures() => Vk.GetPhysicalDeviceFeatures(PhysicalDevice);
+
+	public FormatProperties GetFormatProperties(Format format) => Vk.GetPhysicalDeviceFormatProperties(PhysicalDevice, format);
 }

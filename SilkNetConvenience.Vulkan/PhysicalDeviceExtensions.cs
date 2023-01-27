@@ -16,6 +16,11 @@ public static unsafe class PhysicalDeviceExtensions {
 		vk.GetPhysicalDeviceFeatures(physicalDevice, out var features);
 		return features;
 	}
+
+	public static FormatProperties GetPhysicalDeviceFormatProperties(this Vk vk, PhysicalDevice physicalDevice, Format format) {
+		vk.GetPhysicalDeviceFormatProperties(physicalDevice, format, out var properties);
+		return properties;
+	}
 	
 	public static QueueFamilyProperties[] GetPhysicalDeviceQueueFamilyProperties(this Vk vk, PhysicalDevice physicalDevice) {
 		return Helpers.GetArray((ref uint len, QueueFamilyProperties* data) => vk.GetPhysicalDeviceQueueFamilyProperties(physicalDevice, ref len, data));

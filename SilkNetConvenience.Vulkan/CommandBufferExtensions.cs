@@ -7,6 +7,18 @@ using SilkNetConvenience.Exceptions;
 namespace SilkNetConvenience; 
 
 public static class CommandBufferExtensions {
+	public static CommandBuffer[] AllocateCommandBuffers(this Vk vk, Device device, CommandBufferAllocateInformation allocInfo) {
+		var infos = new[]{new CommandBufferAllocateInfo {
+			SType = StructureType.CommandBufferAllocateInfo,
+			CommandPool = allocInfo.CommandPool,
+			Level = allocInfo.Level,
+			CommandBufferCount = allocInfo.CommandBufferCount
+		}};
+		var commandBuffers = new CommandBuffer[allocInfo.CommandBufferCount];
+		vk.AllocateCommandBuffers(device, infos, commandBuffers).AssertSuccess();
+		return commandBuffers;
+	}
+	
 	public static void BeginCommandBuffer(this Vk vk, CommandBuffer commandBuffer, CommandBufferBeginInformation beginInfo) {
 		var info = beginInfo.GetBeginInfo();
 		vk.BeginCommandBuffer(commandBuffer, info).AssertSuccess();

@@ -58,4 +58,8 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public VulkanImageView CreateImageView(ImageViewCreateInformation viewInfo) => new(this, viewInfo);
 
 	public VulkanSampler CreateSampler(SamplerCreateInformation createInfo) => new(this, createInfo);
+
+	public VulkanRenderPass CreateRenderPass(RenderPassCreateInformation createInfo) => new(this, createInfo);
+
+	public VulkanFramebuffer CreateFramebuffer(FramebufferCreateInformation createInfo) => new(this, createInfo);
 }

@@ -13,37 +13,6 @@ public static unsafe class DeviceExtensions {
 	public static KhrSwapchain? GetKhrSwapchainExtension(this Vk vk, Instance instance, Device device) {
 		return vk.TryGetDeviceExtension(instance, device, out KhrSwapchain extension) ? extension : null;
 	}
-	
-	public static Queue GetDeviceQueue(this Vk vk, Device device, uint queueFamilyIndex, uint queueIndex) {
-		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out var queue);
-		return queue;
-	}
-
-	public static DeviceMemory AllocateMemory(this Vk vk, Device device, MemoryAllocateInformation allocInfo) {
-		var memoryAllocateInfo = new MemoryAllocateInfo {
-			SType = StructureType.MemoryAllocateInfo,
-			AllocationSize = allocInfo.AllocationSize,
-			MemoryTypeIndex = allocInfo.MemoryTypeIndex
-		};
-		vk.AllocateMemory(device, memoryAllocateInfo, null, out var deviceMemory).AssertSuccess();
-		return deviceMemory;
-	}
-
-	public static Buffer CreateBuffer(this Vk vk, Device device, BufferCreateInformation bufferCreateInfo) {
-		fixed (uint* queueFamilyIndicesPointer = bufferCreateInfo.QueueFamilyIndices) {
-			var createInfo = new BufferCreateInfo {
-				SType = StructureType.BufferCreateInfo,
-				Flags = bufferCreateInfo.Flags,
-				Size = bufferCreateInfo.Size,
-				Usage = bufferCreateInfo.Usage,
-				SharingMode = bufferCreateInfo.SharingMode,
-				PQueueFamilyIndices = queueFamilyIndicesPointer,
-				QueueFamilyIndexCount = (uint)bufferCreateInfo.QueueFamilyIndices.Length
-			};
-			vk.CreateBuffer(device, createInfo, null, out var buffer).AssertSuccess();
-			return buffer;
-		}
-	}
 
 	public static ShaderModule CreateShaderModule(this Vk vk, Device device, ShaderModuleCreateInformation shaderModuleCreateInfo) {
 		fixed (byte* codePointer = shaderModuleCreateInfo.Code) {
@@ -144,18 +113,6 @@ public static unsafe class DeviceExtensions {
 		return commandPool;
 	}
 
-	public static CommandBuffer[] AllocateCommandBuffers(this Vk vk, Device device, CommandBufferAllocateInformation allocInfo) {
-		var infos = new[]{new CommandBufferAllocateInfo {
-			SType = StructureType.CommandBufferAllocateInfo,
-			CommandPool = allocInfo.CommandPool,
-			Level = allocInfo.Level,
-			CommandBufferCount = allocInfo.CommandBufferCount
-		}};
-		var commandBuffers = new CommandBuffer[allocInfo.CommandBufferCount];
-		vk.AllocateCommandBuffers(device, infos, commandBuffers).AssertSuccess();
-		return commandBuffers;
-	}
-
 	public static DescriptorPool CreateDescriptorPool(this Vk vk, Device device, DescriptorPoolCreateInformation descriptorPoolCreateInfo) {
 		fixed (DescriptorPoolSize* poolSizesPointer = descriptorPoolCreateInfo.PoolSizes) {
 			var createInfo = new DescriptorPoolCreateInfo {
@@ -217,7 +174,6 @@ public static unsafe class DeviceExtensions {
 			DescriptorCount = c.DescriptorCount
 		}).ToArray();
 		vk.UpdateDescriptorSets(device, writes, copies);
-		
 	}
 
 	public static Sampler CreateSampler(this Vk vk, Device device, SamplerCreateInformation createInfo) {
@@ -228,36 +184,6 @@ public static unsafe class DeviceExtensions {
 
 	public static void DestroySampler(this Vk vk, Device device, Sampler sampler) {
 		vk.DestroySampler(device, sampler, null);
-	}
-
-	public static Image CreateImage(this Vk vk, Device device, ImageCreateInformation createInfo) {
-		var info = createInfo.GetCreateInfo();
-		vk.CreateImage(device, info, null, out var image).AssertSuccess();
-		return image;
-	}
-
-	public static void DestroyImage(this Vk vk, Device device, Image image) {
-		vk.DestroyImage(device, image, null);
-	}
-
-	public static ImageView CreateImageView(this Vk vk, Device device, ImageViewCreateInformation createInfo) {
-		var info = createInfo.GetCreateInfo();
-		vk.CreateImageView(device, info, null, out var imageView).AssertSuccess();
-		return imageView;
-	}
-
-	public static RenderPass CreateRenderPass(this Vk vk, Device device, RenderPassCreateInformation createInfo) {
-		var info = createInfo.GetCreateInfo();
-		vk.CreateRenderPass(device, info, null, out var renderPass).AssertSuccess();
-		return renderPass;
-	}
-
-	public static void FreeMemory(this Vk vk, Device device, DeviceMemory memory) {
-		vk.FreeMemory(device, memory, null);
-	}
-
-	public static void DestroyBuffer(this Vk vk, Device device, Buffer buffer) {
-		vk.DestroyBuffer(device, buffer, null);
 	}
 
 	public static void DestroyDescriptorPool(this Vk vk, Device device, DescriptorPool descriptorPool) {

@@ -6,6 +6,11 @@ using SilkNetConvenience.Exceptions;
 namespace SilkNetConvenience; 
 
 public static unsafe class QueueExtensions {
+	public static Queue GetDeviceQueue(this Vk vk, Device device, uint queueFamilyIndex, uint queueIndex) {
+		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out var queue);
+		return queue;
+	}
+	
 	public static void QueueSubmit(this Vk vk, Queue queue, SubmitInformation[] submitInfos, Fence fence) {
 		var infos = submitInfos.Select(s => {
 			fixed (CommandBuffer* buffers = s.CommandBuffers)
