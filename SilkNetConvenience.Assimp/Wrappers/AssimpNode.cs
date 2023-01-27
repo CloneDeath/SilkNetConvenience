@@ -1,4 +1,3 @@
-using System.Collections;
 using Silk.NET.Assimp;
 
 namespace SilkNetConvenience.Assimp.Wrappers; 
