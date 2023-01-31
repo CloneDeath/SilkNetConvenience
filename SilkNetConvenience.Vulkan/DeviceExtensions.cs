@@ -1,10 +1,10 @@
 using System.Linq;
-using Silk.NET.Core.Native;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.CreateInfo.Descriptors;
 using SilkNetConvenience.CreateInfo.Images;
+using SilkNetConvenience.CreateInfo.Pipelines;
 using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience; 
@@ -65,41 +65,6 @@ public static unsafe class DeviceExtensions {
 			};
 			vk.CreatePipelineLayout(device, createInfo, null, out var pipelineLayout).AssertSuccess();
 			return pipelineLayout;
-		}
-	}
-
-	public static Pipeline CreateComputePipeline(this Vk vk, Device device, PipelineCache pipelineCache,
-		ComputePipelineCreateInformation pipelineCreateInformation) {
-		return vk.CreateComputePipelines(device, pipelineCache, new[] { pipelineCreateInformation }).First();
-	}
-
-	public static Pipeline[] CreateComputePipelines(this Vk vk, Device device, PipelineCache pipelineCache,
-													ComputePipelineCreateInformation[] pipelineCreateInfos) {
-		var createInfos = pipelineCreateInfos.Select(p => new ComputePipelineCreateInfo {
-			SType = StructureType.ComputePipelineCreateInfo,
-			Flags = p.Flags,
-			Layout = p.Layout,
-			Stage = new PipelineShaderStageCreateInfo {
-				SType = StructureType.PipelineShaderStageCreateInfo,
-				Stage = p.Stage.Stage,
-				Flags = p.Stage.Flags,
-				Module = p.Stage.Module,
-				PName = (byte*)SilkMarshal.StringToPtr(p.Stage.Name)
-			},
-			BasePipelineHandle = p.BasePipelineHandle,
-			BasePipelineIndex = p.BasePipelineIndex
-		}).ToArray();
-
-		var pipelines = new Pipeline[pipelineCreateInfos.Length];
-
-		try {
-			vk.CreateComputePipelines(device, pipelineCache, createInfos, null, pipelines).AssertSuccess();
-			return pipelines;
-		}
-		finally {
-			foreach (var createInfo in createInfos) {
-				SilkMarshal.Free((nint)createInfo.Stage.PName);
-			}
 		}
 	}
 

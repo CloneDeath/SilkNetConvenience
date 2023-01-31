@@ -1,7 +1,7 @@
 using System;
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo;
+namespace SilkNetConvenience.CreateInfo.Pipelines;
 
 public class PipelineLayoutCreateInformation {
 	public PipelineLayoutCreateFlags Flags;

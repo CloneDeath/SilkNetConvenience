@@ -1,6 +1,6 @@
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo;
+namespace SilkNetConvenience.CreateInfo.Pipelines;
 
 public class ComputePipelineCreateInformation {
 	public PipelineCreateFlags Flags;

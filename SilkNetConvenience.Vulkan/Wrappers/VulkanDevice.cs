@@ -4,6 +4,7 @@ using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.CreateInfo.Descriptors;
 using SilkNetConvenience.CreateInfo.Images;
+using SilkNetConvenience.CreateInfo.Pipelines;
 using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience.Wrappers; 
@@ -99,4 +100,10 @@ public class VulkanDevice : BaseVulkanWrapper {
 		}
 		throw new Exception("Failed to find a suitable memory location");
 	}
+
+	public VulkanPipelineLayout CreatePipelineLayout(params DescriptorSetLayout[] layouts)
+		=> CreatePipelineLayout(new PipelineLayoutCreateInformation { SetLayouts = layouts });
+	public VulkanPipelineLayout CreatePipelineLayout(PipelineLayoutCreateInformation createInfo) => new(this, createInfo);
+
+	public VulkanPipeline CreateGraphicsPipeline(GraphicsPipelineCreateInformation createInfo) => new(this, createInfo);
 }

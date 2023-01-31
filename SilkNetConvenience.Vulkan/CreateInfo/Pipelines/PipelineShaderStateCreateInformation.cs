@@ -1,6 +1,6 @@
 using Silk.NET.Vulkan;
 
-namespace SilkNetConvenience.CreateInfo;
+namespace SilkNetConvenience.CreateInfo.Pipelines;
 
 public class PipelineShaderStateCreateInformation {
 	public string Name = string.Empty;
