@@ -10,7 +10,9 @@ public class VulkanInstance : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Instance Instance;
 
-	public VulkanInstance(VulkanContext vk, InstanceCreateInformation createInfo) : this(vk.Vk, createInfo){}
+	public VulkanInstance(VulkanContext vk, InstanceCreateInformation createInfo) : this(vk.Vk, createInfo) {
+		vk.AddChildResource(this);
+	}
 	public VulkanInstance(Vk vk, InstanceCreateInformation createInfo) {
 		Vk = vk;
 		Instance = vk.CreateInstance(createInfo);

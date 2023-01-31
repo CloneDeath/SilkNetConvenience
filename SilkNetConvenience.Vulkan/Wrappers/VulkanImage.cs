@@ -7,8 +7,10 @@ public class VulkanImage : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Device Device;
 	public readonly Image Image;
-	
-	public VulkanImage(VulkanDevice device, Image image) : this(device.Vk, device.Device, image) {}
+
+	public VulkanImage(VulkanDevice device, Image image) : this(device.Vk, device.Device, image) {
+		device.AddChildResource(this);
+	}
 	public VulkanImage(Vk vk, Device device, Image image) {
 		Vk = vk;
 		Device = device;

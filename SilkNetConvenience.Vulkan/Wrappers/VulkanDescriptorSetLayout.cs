@@ -8,8 +8,10 @@ public class VulkanDescriptorSetLayout : BaseVulkanWrapper {
 	public readonly Device Device;
 	public readonly DescriptorSetLayout DescriptorSetLayout;
 
-	public VulkanDescriptorSetLayout(VulkanDevice device, DescriptorSetLayoutCreateInformation createInfo) 
-		: this(device.Vk, device.Device, createInfo) { }
+	public VulkanDescriptorSetLayout(VulkanDevice device, DescriptorSetLayoutCreateInformation createInfo)
+		: this(device.Vk, device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 
 	public VulkanDescriptorSetLayout(Vk vk, Device device, DescriptorSetLayoutCreateInformation createInfo) {
 		Vk = vk;

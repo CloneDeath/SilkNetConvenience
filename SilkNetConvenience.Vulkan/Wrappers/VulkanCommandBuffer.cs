@@ -22,7 +22,9 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 	}
 
 	public VulkanCommandBuffer(VulkanCommandPool commandPool, CommandBufferLevel level)
-		: this(commandPool.Vk, commandPool.Device, commandPool.CommandPool, level){}
+		: this(commandPool.Vk, commandPool.Device, commandPool.CommandPool, level) {
+		commandPool.AddChildResource(this);
+	}
 	public VulkanCommandBuffer(Vk vk, Device device, CommandPool commandPool, CommandBufferLevel level) {
 		Vk = vk;
 		Device = device;
@@ -123,13 +125,11 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 			Array.Empty<BufferMemoryBarrierInformation>(), Array.Empty<ImageMemoryBarrierInformation>());
 	}
 	
-	
 	public void PipelineBarrier(PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, 
 		DependencyFlags dependencyFlags, params BufferMemoryBarrierInformation[] bufferMemoryBarriers) {
 		PipelineBarrier(srcStageMask, dstStageMask, dependencyFlags, Array.Empty<MemoryBarrierInformation>(),
 			bufferMemoryBarriers, Array.Empty<ImageMemoryBarrierInformation>());
 	}
-	
 	
 	public void PipelineBarrier(PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, 
 		DependencyFlags dependencyFlags, params ImageMemoryBarrierInformation[] imageMemoryBarriers) {

@@ -6,8 +6,10 @@ public class VulkanSemaphore : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Device Device;
 	public readonly Semaphore Semaphore;
-	
-	public VulkanSemaphore(VulkanDevice device) : this(device.Vk, device.Device){}
+
+	public VulkanSemaphore(VulkanDevice device) : this(device.Vk, device.Device) {
+		device.AddChildResource(this);
+	}
 	public VulkanSemaphore(Vk vk, Device device) {
 		Vk = vk;
 		Device = device;

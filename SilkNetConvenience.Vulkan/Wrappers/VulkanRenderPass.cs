@@ -8,7 +8,10 @@ public class VulkanRenderPass : BaseVulkanWrapper {
 	public Device Device;
 	public RenderPass RenderPass;
 
-	public VulkanRenderPass(VulkanDevice device, RenderPassCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
+	public VulkanRenderPass(VulkanDevice device, RenderPassCreateInformation createInfo) 
+		: this(device.Vk, device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 	public VulkanRenderPass(Vk vk, Device device, RenderPassCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;

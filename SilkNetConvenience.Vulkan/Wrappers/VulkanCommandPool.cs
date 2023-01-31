@@ -10,7 +10,9 @@ public class VulkanCommandPool : BaseVulkanWrapper {
 	public readonly CommandPool CommandPool;
 
 	public VulkanCommandPool(VulkanDevice device, CommandPoolCreateInformation createInfo)
-		: this(device.Vk, device.Device, createInfo){}
+		: this(device.Vk, device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 	public VulkanCommandPool(Vk vk, Device device, CommandPoolCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;
@@ -20,7 +22,6 @@ public class VulkanCommandPool : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyCommandPool(Device, CommandPool);
 	}
-
 	
 	public VulkanCommandBuffer AllocateCommandBuffer(CommandBufferLevel level) {
 		return new VulkanCommandBuffer(this, level);

@@ -8,7 +8,10 @@ public class VulkanFramebuffer : BaseVulkanWrapper {
 	public Device Device;
 	public Framebuffer Framebuffer;
 
-	public VulkanFramebuffer(VulkanDevice device, FramebufferCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
+	public VulkanFramebuffer(VulkanDevice device, FramebufferCreateInformation createInfo) : this(device.Vk,
+		device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 	public VulkanFramebuffer(Vk vk, Device device, FramebufferCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;

@@ -8,7 +8,10 @@ public class VulkanFence : BaseVulkanWrapper {
 	public readonly Device Device;
 	public readonly Fence Fence;
 
-	public VulkanFence(VulkanDevice device, FenceCreateFlags flags = FenceCreateFlags.None) : this(device.Vk, device.Device, flags) {}
+	public VulkanFence(VulkanDevice device, FenceCreateFlags flags = FenceCreateFlags.None) : this(device.Vk,
+		device.Device, flags) {
+		device.AddChildResource(this);
+	}
 	public VulkanFence(Vk vk, Device device, FenceCreateFlags flags = FenceCreateFlags.None) {
 		Vk = vk;
 		Device = device;

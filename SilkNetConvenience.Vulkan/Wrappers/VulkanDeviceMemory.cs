@@ -13,9 +13,14 @@ public class VulkanDeviceMemory : BaseVulkanWrapper {
 	public ulong Size { get; }
 
 	public VulkanDeviceMemory(VulkanDevice device, MemoryAllocateInformation allocInfo)
-		: this(device.Vk, device.Device, allocInfo){}
-	public VulkanDeviceMemory(VulkanDevice device, uint memoryTypeIndex, ulong size) 
-		: this(device.Vk, device.Device, memoryTypeIndex, size){}
+		: this(device.Vk, device.Device, allocInfo) {
+		device.AddChildResource(this);
+	}
+
+	public VulkanDeviceMemory(VulkanDevice device, uint memoryTypeIndex, ulong size)
+		: this(device.Vk, device.Device, memoryTypeIndex, size) {
+		device.AddChildResource(this);
+	}
 	public VulkanDeviceMemory(Vk vk, Device device, uint memoryTypeIndex, ulong size) 
 		: this(vk, device, new MemoryAllocateInformation{ MemoryTypeIndex = memoryTypeIndex, AllocationSize = size}) {}
 	public VulkanDeviceMemory(Vk vk, Device device, MemoryAllocateInformation allocInfo)
@@ -30,7 +35,6 @@ public class VulkanDeviceMemory : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.FreeMemory(Device, DeviceMemory);
 	}
-	
 	
 	public Span<T> MapMemory<T>(ulong? offset = null, ulong? size = null) where T : unmanaged {
 		var offsetUsed = offset ?? 0;

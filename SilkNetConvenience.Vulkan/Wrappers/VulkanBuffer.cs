@@ -10,7 +10,9 @@ public class VulkanBuffer : BaseVulkanWrapper {
 	public readonly Device Device;
 	public readonly Buffer Buffer;
 
-	public VulkanBuffer(VulkanDevice device, BufferCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
+	public VulkanBuffer(VulkanDevice device, BufferCreateInformation createInfo) : this(device.Vk, device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 	public VulkanBuffer(Vk vk, Device device, BufferCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;

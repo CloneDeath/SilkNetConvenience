@@ -9,11 +9,16 @@ public class VulkanDescriptorPool : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Device Device;
 	public readonly DescriptorPool DescriptorPool;
-	
-	public VulkanDescriptorPool(VulkanDevice device, DescriptorPoolCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
+	public readonly bool CanFreeDescriptorSets;
+
+	public VulkanDescriptorPool(VulkanDevice device, DescriptorPoolCreateInformation createInfo) : this(device.Vk,
+		device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 	public VulkanDescriptorPool(Vk vk, Device device, DescriptorPoolCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;
+		CanFreeDescriptorSets = createInfo.Flags.HasFlag(DescriptorPoolCreateFlags.FreeDescriptorSetBit);
 		DescriptorPool = vk.CreateDescriptorPool(device, createInfo);
 	}
 	protected override void ReleaseVulkanResources() {
