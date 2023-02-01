@@ -110,11 +110,6 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 
 	public void EndRenderPass() => Vk.CmdEndRenderPass(CommandBuffer);
 
-	public void BindDescriptorSet(PipelineBindPoint bindPoint, VulkanPipelineLayout pipelineLayout, uint firstSet,
-								  VulkanDescriptorSet descriptorSet, uint? dynamicOffset = null) {
-		var offsets = dynamicOffset.HasValue ? new[] { dynamicOffset.Value } : Array.Empty<uint>();
-		BindDescriptorSets(bindPoint, pipelineLayout.PipelineLayout, firstSet, new[] { descriptorSet }, offsets);
-	}
 	public void BindDescriptorSet(PipelineBindPoint bindPoint, PipelineLayout pipelineLayout, uint firstSet,
 		VulkanDescriptorSet descriptorSet, uint? dynamicOffset = null) {
 		var offsets = dynamicOffset.HasValue ? new[] { dynamicOffset.Value } : Array.Empty<uint>();

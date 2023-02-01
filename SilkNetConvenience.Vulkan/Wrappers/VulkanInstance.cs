@@ -1,9 +1,6 @@
 using System.Linq;
 using Silk.NET.Vulkan;
-using Silk.NET.Vulkan.Extensions.EXT;
-using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
-using SilkNetConvenience.CreateInfo.EXT;
 using SilkNetConvenience.Wrappers.EXT;
 using SilkNetConvenience.Wrappers.KHR;
 

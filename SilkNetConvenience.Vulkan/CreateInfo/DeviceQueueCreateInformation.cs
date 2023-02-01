@@ -1,6 +1,5 @@
 using System;
 using Silk.NET.Vulkan;
-using SilkNetConvenience.CreateInfo.Pipelines;
 
 namespace SilkNetConvenience.CreateInfo; 
 

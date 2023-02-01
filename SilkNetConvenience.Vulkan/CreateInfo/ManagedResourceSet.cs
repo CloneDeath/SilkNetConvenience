@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Silk.NET.Core.Native;
-using Silk.NET.Vulkan;
-using SilkNetConvenience.CreateInfo.Pipelines;
 
 namespace SilkNetConvenience.CreateInfo; 
 

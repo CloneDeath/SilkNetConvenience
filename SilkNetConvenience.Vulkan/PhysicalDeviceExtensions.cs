@@ -1,8 +1,4 @@
-using System.Linq;
-using Silk.NET.Core.Native;
 using Silk.NET.Vulkan;
-using SilkNetConvenience.CreateInfo;
-using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience; 
 

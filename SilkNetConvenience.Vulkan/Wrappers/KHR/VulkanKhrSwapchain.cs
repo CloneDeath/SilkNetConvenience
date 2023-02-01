@@ -2,7 +2,6 @@ using System;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo.KHR;
-using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience.Wrappers.KHR; 
 

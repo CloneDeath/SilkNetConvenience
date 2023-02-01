@@ -1,6 +1,5 @@
 using System;
 using Silk.NET.Vulkan;
-using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.CreateInfo.Descriptors;
 using SilkNetConvenience.CreateInfo.Images;
