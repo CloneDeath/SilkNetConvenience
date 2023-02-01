@@ -6,10 +6,14 @@ using SilkNetConvenience.Exceptions;
 namespace SilkNetConvenience; 
 
 public static unsafe class ExtDebugUtilsExtensions {
-	public static DebugUtilsMessengerEXT CreateDebugUtilsMessenger(this ExtDebugUtils debugUtils, Instance instance,
-		DebugUtilsMessengerCreateInformation createInformation) {
-		debugUtils.CreateDebugUtilsMessenger(instance, createInformation.GetCreateInfo(), 
-			null, out var debugMessenger).AssertSuccess();
+	public static DebugUtilsMessengerEXT CreateDebugUtilsMessenger(this ExtDebugUtils debugUtils, Instance instance, DebugUtilsMessengerCreateInformation createInfo) {
+		using var info = createInfo.GetCreateInfo(); 
+		debugUtils.CreateDebugUtilsMessenger(instance, info.Resource, null, out var debugMessenger).AssertSuccess();
 		return debugMessenger;
+	}
+
+	public static void DestroyDebugUtilsMessenger(this ExtDebugUtils debugUtils, Instance instance,
+												  DebugUtilsMessengerEXT debugUtilsMessenger) {
+		debugUtils.DestroyDebugUtilsMessenger(instance, debugUtilsMessenger, null);
 	}
 }

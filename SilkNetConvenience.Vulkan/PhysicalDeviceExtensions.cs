@@ -35,39 +35,4 @@ public static unsafe class PhysicalDeviceExtensions {
 		vk.GetPhysicalDeviceMemoryProperties(physicalDevice, out var memoryProperties);
 		return memoryProperties;
 	}
-	
-	public static Device CreateDevice(this Vk vk, PhysicalDevice physicalDevice, DeviceCreateInformation info) {
-		var enabledFeatures = info.EnabledFeatures;
-		var queueCreateInfos = info.QueueCreateInfos.Select(q => {
-			fixed (float* queuePrioritiesPointer = q.QueuePriorities) {
-				return new DeviceQueueCreateInfo {
-					SType = StructureType.DeviceQueueCreateInfo,
-					Flags = q.Flags,
-					QueueFamilyIndex = q.QueueFamilyIndex,
-					QueueCount = (uint)q.QueuePriorities.Length,
-					PQueuePriorities = queuePrioritiesPointer
-				};
-			}
-		}).ToArray();
-		fixed (DeviceQueueCreateInfo* queueCreateInfoPointer = queueCreateInfos) {
-			var deviceCreateInfo = new DeviceCreateInfo {
-				SType = StructureType.DeviceCreateInfo,
-				EnabledLayerCount = (uint)info.EnabledLayerNames.Length,
-				PpEnabledLayerNames = (byte**)SilkMarshal.StringArrayToPtr(info.EnabledLayerNames),
-				EnabledExtensionCount = (uint)info.EnabledExtensionNames.Length,
-				PpEnabledExtensionNames = (byte**)SilkMarshal.StringArrayToPtr(info.EnabledExtensionNames),
-				PEnabledFeatures = &enabledFeatures,
-				QueueCreateInfoCount = (uint)queueCreateInfos.Length,
-				PQueueCreateInfos = queueCreateInfoPointer
-			};
-			try {
-				vk.CreateDevice(physicalDevice, deviceCreateInfo, null, out var device).AssertSuccess();
-				return device;
-			}
-			finally {
-				SilkMarshal.Free((nint)deviceCreateInfo.PpEnabledLayerNames);
-				SilkMarshal.Free((nint)deviceCreateInfo.PpEnabledExtensionNames);
-			}
-		}
-	}
 }

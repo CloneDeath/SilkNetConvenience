@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Silk.NET.Core.Native;
+using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo.Pipelines;
 
 namespace SilkNetConvenience.CreateInfo; 
@@ -54,6 +55,12 @@ public unsafe class ManagedResources : IDisposable {
 		return (byte*)ptr;
 	}
 
+	public byte** AllocateStringArray(string[] strings) {
+		var ptr = SilkMarshal.StringArrayToPtr(strings);
+		_strings.Add(ptr);
+		return (byte**)ptr;
+	}
+
 	public TOut* AllocateCreateInfo<TOut>(IGetCreateInfo<TOut> createInfo) where TOut : unmanaged {
 		var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<TOut>());
 		_hGlobals.Add(ptr);
@@ -64,7 +71,7 @@ public unsafe class ManagedResources : IDisposable {
 		new[] { managedResources.Resource }.AsSpan().CopyTo(span);
 		return (TOut*)ptr;
 	}
-	
+
 	public TOut* AllocateCreateInfos<TOut, TIn>(params TIn[] createInfos) 
 		where TOut : unmanaged 
 		where TIn : IGetCreateInfo<TOut> {
@@ -85,6 +92,14 @@ public unsafe class ManagedResources : IDisposable {
 
 		var span = new Span<T>((void*)ptr, array.Length);
 		array.AsSpan().CopyTo(span);
+		return (T*)ptr;
+	}
+
+	public T* AllocateStruct<T>(T structure) where T : unmanaged {
+		var ptr = Marshal.AllocHGlobal(sizeof(T));
+		_hGlobals.Add(ptr);
+		var span = new Span<T>((void*)ptr, 1);
+		new[] { structure }.AsSpan().CopyTo(span);
 		return (T*)ptr;
 	}
 }
