@@ -21,4 +21,6 @@ public class VulkanRenderPass : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyRenderPass(Device, RenderPass);
 	}
+	
+	public static implicit operator RenderPass(VulkanRenderPass self) => self.RenderPass;
 }

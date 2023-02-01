@@ -4,6 +4,8 @@ using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo;
 using SilkNetConvenience.CreateInfo.Barriers;
 using SilkNetConvenience.Exceptions;
+using SilkNetConvenience.Wrappers.Descriptors;
+using SilkNetConvenience.Wrappers.Pipelines;
 using Buffer = Silk.NET.Vulkan.Buffer;
 
 namespace SilkNetConvenience.Wrappers; 
@@ -39,6 +41,8 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.FreeCommandBuffers(Device, CommandPool, 1, CommandBuffer);
 	}
+	
+	public static implicit operator CommandBuffer(VulkanCommandBuffer self) => self.CommandBuffer;
 
 	public void Begin(CommandBufferUsageFlags usage = CommandBufferUsageFlags.None) {
 		Vk.BeginCommandBuffer(CommandBuffer, new CommandBufferBeginInformation {

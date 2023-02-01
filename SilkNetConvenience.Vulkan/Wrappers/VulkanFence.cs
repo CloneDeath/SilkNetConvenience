@@ -21,6 +21,8 @@ public class VulkanFence : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyFence(Device, Fence);
 	}
+	
+	public static implicit operator Fence(VulkanFence self) => self.Fence;
 
 	public void Wait(TimeSpan? timeout = null) {
 		var timeoutNS = timeout.HasValue ? (ulong)timeout.Value.TotalMilliseconds * 1_000_000 : ulong.MaxValue;

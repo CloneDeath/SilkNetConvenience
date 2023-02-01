@@ -16,6 +16,8 @@ public class VulkanQueue {
 		Vk = vk;
 		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out Queue);
 	}
+	
+	public static implicit operator Queue(VulkanQueue self) => self.Queue;
 
 	public void Submit(SubmitInformation submitInfo, VulkanFence? fence = null) {
 		Submit(new[]{submitInfo}, fence?.Fence ?? default);

@@ -26,4 +26,6 @@ public class VulkanShaderModule : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		_vk.DestroyShaderModule(_device, ShaderModule);
 	}
+	
+	public static implicit operator ShaderModule(VulkanShaderModule self) => self.ShaderModule;
 }

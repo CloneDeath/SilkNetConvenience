@@ -2,7 +2,7 @@ using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.EXT;
 using SilkNetConvenience.CreateInfo.EXT;
 
-namespace SilkNetConvenience.Wrappers; 
+namespace SilkNetConvenience.Wrappers.EXT; 
 
 public class VulkanDebugUtilsMessenger : BaseVulkanWrapper {
 	public Vk Vk;
@@ -26,4 +26,6 @@ public class VulkanDebugUtilsMessenger : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		ExtDebugUtils.DestroyDebugUtilsMessenger(Instance, DebugUtilsMessengerEXT);
 	}
+	
+	public static implicit operator DebugUtilsMessengerEXT(VulkanDebugUtilsMessenger self) => self.DebugUtilsMessengerEXT;
 }

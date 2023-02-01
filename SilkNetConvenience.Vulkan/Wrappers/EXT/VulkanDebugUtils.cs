@@ -3,7 +3,7 @@ using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.EXT;
 using SilkNetConvenience.CreateInfo.EXT;
 
-namespace SilkNetConvenience.Wrappers; 
+namespace SilkNetConvenience.Wrappers.EXT; 
 
 public class VulkanDebugUtils : BaseVulkanWrapper {
 	public readonly Vk Vk;
@@ -20,6 +20,8 @@ public class VulkanDebugUtils : BaseVulkanWrapper {
 	}
 
 	protected override void ReleaseVulkanResources() { }
+	
+	public static implicit operator ExtDebugUtils(VulkanDebugUtils self) => self.ExtDebugUtils;
 
 	public VulkanDebugUtilsMessenger CreateDebugUtilsMessenger(DebugUtilsMessengerCreateInformation createInfo) => new(this, createInfo);
 }

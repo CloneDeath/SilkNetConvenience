@@ -1,7 +1,7 @@
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo.Descriptors;
 
-namespace SilkNetConvenience.Wrappers; 
+namespace SilkNetConvenience.Wrappers.Descriptors; 
 
 public class VulkanDescriptorSetLayout : BaseVulkanWrapper {
 	public readonly Vk Vk;
@@ -22,4 +22,6 @@ public class VulkanDescriptorSetLayout : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyDescriptorSetLayout(Device, DescriptorSetLayout);
 	}
+	
+	public static implicit operator DescriptorSetLayout(VulkanDescriptorSetLayout self) => self.DescriptorSetLayout;
 }

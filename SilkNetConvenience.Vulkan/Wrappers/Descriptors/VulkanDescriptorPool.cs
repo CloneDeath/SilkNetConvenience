@@ -3,7 +3,7 @@ using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo.Descriptors;
 
-namespace SilkNetConvenience.Wrappers; 
+namespace SilkNetConvenience.Wrappers.Descriptors; 
 
 public class VulkanDescriptorPool : BaseVulkanWrapper {
 	public readonly Vk Vk;
@@ -24,6 +24,8 @@ public class VulkanDescriptorPool : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyDescriptorPool(Device, DescriptorPool);
 	}
+	
+	public static implicit operator DescriptorPool(VulkanDescriptorPool self) => self.DescriptorPool;
 
 	public VulkanDescriptorSet[] AllocateDescriptorSets(int count, VulkanDescriptorSetLayout layout) 
 		=> AllocateDescriptorSets(count, layout.DescriptorSetLayout);

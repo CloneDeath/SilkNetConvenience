@@ -26,6 +26,8 @@ public class VulkanImage : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyImage(Device, Image);
 	}
+	
+	public static implicit operator Image(VulkanImage self) => self.Image;
 
 	public MemoryRequirements GetMemoryRequirements() {
 		return Vk.GetImageMemoryRequirements(Device, Image);

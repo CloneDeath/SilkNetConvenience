@@ -14,6 +14,8 @@ public class VulkanPhysicalDevice {
 		Instance = instance;
 		PhysicalDevice = physicalDevice;
 	}
+	
+	public static implicit operator PhysicalDevice(VulkanPhysicalDevice self) => self.PhysicalDevice;
 
 	public ExtensionProperties[] EnumerateExtensionProperties() => Vk.EnumerateDeviceExtensionProperties(PhysicalDevice);
 	public QueueFamilyProperties[] GetQueueFamilyProperties() => Vk.GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice);

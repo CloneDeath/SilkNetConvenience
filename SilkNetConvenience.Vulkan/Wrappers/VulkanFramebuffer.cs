@@ -20,4 +20,6 @@ public class VulkanFramebuffer : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyFramebuffer(Device, Framebuffer);
 	}
+	
+	public static implicit operator Framebuffer(VulkanFramebuffer self) => self.Framebuffer;
 }

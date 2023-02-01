@@ -21,4 +21,6 @@ public class VulkanSampler : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroySampler(Device, Sampler);
 	}
+	
+	public static implicit operator Sampler(VulkanSampler self) => self.Sampler;
 }

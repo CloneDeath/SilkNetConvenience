@@ -23,6 +23,8 @@ public class VulkanCommandPool : BaseVulkanWrapper {
 		Vk.DestroyCommandPool(Device, CommandPool);
 	}
 	
+	public static implicit operator CommandPool(VulkanCommandPool self) => self.CommandPool;
+	
 	public VulkanCommandBuffer AllocateCommandBuffer(CommandBufferLevel level) {
 		return new VulkanCommandBuffer(this, level);
 	}

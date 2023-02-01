@@ -1,7 +1,7 @@
 using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo.Pipelines;
 
-namespace SilkNetConvenience.Wrappers; 
+namespace SilkNetConvenience.Wrappers.Pipelines; 
 
 public class VulkanPipeline : BaseVulkanWrapper {
 	public readonly Vk Vk;
@@ -24,4 +24,6 @@ public class VulkanPipeline : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyPipeline(Device, Pipeline);
 	}
+	
+	public static implicit operator Pipeline(VulkanPipeline self) => self.Pipeline;
 }

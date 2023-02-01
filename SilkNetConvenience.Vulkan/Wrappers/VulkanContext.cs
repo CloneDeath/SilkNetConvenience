@@ -14,6 +14,8 @@ public class VulkanContext : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.Dispose();
 	}
+	
+	public static implicit operator Vk(VulkanContext self) => self.Vk;
 
 	public VulkanInstance CreateInstance(InstanceCreateInformation createInfo) => new(this, createInfo);
 

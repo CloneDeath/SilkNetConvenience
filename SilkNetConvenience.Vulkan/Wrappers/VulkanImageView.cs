@@ -20,4 +20,6 @@ public class VulkanImageView : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyImageView(Device, ImageView);
 	}
+	
+	public static implicit operator ImageView(VulkanImageView self) => self.ImageView;
 }

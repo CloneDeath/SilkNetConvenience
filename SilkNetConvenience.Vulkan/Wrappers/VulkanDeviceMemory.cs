@@ -36,6 +36,8 @@ public class VulkanDeviceMemory : BaseVulkanWrapper {
 		Vk.FreeMemory(Device, DeviceMemory);
 	}
 	
+	public static implicit operator DeviceMemory(VulkanDeviceMemory self) => self.DeviceMemory;
+
 	public Span<T> MapMemory<T>(ulong? offset = null, ulong? size = null) where T : unmanaged {
 		var offsetUsed = offset ?? 0;
 		var sizeUsed = size ?? (Size - offsetUsed);

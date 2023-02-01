@@ -22,6 +22,8 @@ public class VulkanBuffer : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyBuffer(Device, Buffer);
 	}
+	
+	public static implicit operator Buffer(VulkanBuffer self) => self.Buffer;
 
 	public void BindMemory(VulkanDeviceMemory deviceMemory, ulong memoryOffset = 0) => BindMemory(deviceMemory.DeviceMemory, memoryOffset);
 	public void BindMemory(DeviceMemory deviceMemory, ulong memoryOffset = 0) 

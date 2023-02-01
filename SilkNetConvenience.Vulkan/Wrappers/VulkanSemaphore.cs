@@ -19,4 +19,6 @@ public class VulkanSemaphore : BaseVulkanWrapper {
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroySemaphore(Device, Semaphore);
 	}
+	
+	public static implicit operator Semaphore(VulkanSemaphore self) => self.Semaphore;
 }

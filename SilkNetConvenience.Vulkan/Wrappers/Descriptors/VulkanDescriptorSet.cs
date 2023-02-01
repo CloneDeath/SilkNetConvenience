@@ -3,7 +3,7 @@ using Silk.NET.Vulkan;
 using SilkNetConvenience.CreateInfo.Descriptors;
 using SilkNetConvenience.Exceptions;
 
-namespace SilkNetConvenience.Wrappers; 
+namespace SilkNetConvenience.Wrappers.Descriptors; 
 
 public class VulkanDescriptorSet : BaseVulkanWrapper {
 	public readonly Vk Vk;
@@ -40,4 +40,6 @@ public class VulkanDescriptorSet : BaseVulkanWrapper {
 		if (!CanFreeDescriptorSet) return;
 		Vk.FreeDescriptorSets(Device, DescriptorPool, 1, DescriptorSet).AssertSuccess();
 	}
+	
+	public static implicit operator DescriptorSet(VulkanDescriptorSet self) => self.DescriptorSet;
 }

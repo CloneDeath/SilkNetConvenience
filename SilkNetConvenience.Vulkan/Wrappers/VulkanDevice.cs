@@ -6,6 +6,9 @@ using SilkNetConvenience.CreateInfo.Descriptors;
 using SilkNetConvenience.CreateInfo.Images;
 using SilkNetConvenience.CreateInfo.Pipelines;
 using SilkNetConvenience.Exceptions;
+using SilkNetConvenience.Wrappers.Descriptors;
+using SilkNetConvenience.Wrappers.KHR;
+using SilkNetConvenience.Wrappers.Pipelines;
 
 namespace SilkNetConvenience.Wrappers; 
 
@@ -28,7 +31,9 @@ public class VulkanDevice : BaseVulkanWrapper {
 		Vk.DestroyDevice(Device);
 	}
 	
-	public KhrSwapchain? GetKhrSwapchainExtension() => Vk.GetKhrSwapchainExtension(Instance, Device);
+	public static implicit operator Device(VulkanDevice self) => self.Device;
+
+	public VulkanKhrSwapchain GetKhrSwapchainExtension() => new(this);
 
 	public VulkanDeviceMemory AllocateMemoryFor(VulkanImage image, MemoryPropertyFlags flags) {
 		var memoryRequirements = image.GetMemoryRequirements();
