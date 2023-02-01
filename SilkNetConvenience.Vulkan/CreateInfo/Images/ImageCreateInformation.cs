@@ -3,7 +3,7 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.CreateInfo.Images; 
 
-public class ImageCreateInformation {
+public class ImageCreateInformation : IGetCreateInfo<ImageCreateInfo> {
 	public Extent3D Extent;
 	public ImageCreateFlags Flags;
 	public Format Format;
@@ -17,24 +17,23 @@ public class ImageCreateInformation {
 	public SharingMode SharingMode;
 	public uint[] QueueFamilyIndices = Array.Empty<uint>();
 
-	public unsafe ImageCreateInfo GetCreateInfo() {
-		fixed (uint* queueFamilyIndices = QueueFamilyIndices) {
-			return new ImageCreateInfo {
-				SType = StructureType.ImageCreateInfo,
-				Extent = Extent,
-				Flags = Flags,
-				Format = Format,
-				Samples = Samples,
-				Tiling = Tiling,
-				Usage = Usage,
-				ArrayLayers = ArrayLayers,
-				ImageType = ImageType,
-				InitialLayout = InitialLayout,
-				MipLevels = MipLevels,
-				SharingMode = SharingMode,
-				QueueFamilyIndexCount = (uint)QueueFamilyIndices.Length,
-				PQueueFamilyIndices = queueFamilyIndices
-			};
-		}
+	public unsafe ManagedResourceSet<ImageCreateInfo> GetCreateInfo() {
+		var resources = new ManagedResources();
+		return new ManagedResourceSet<ImageCreateInfo>(new ImageCreateInfo {
+			SType = StructureType.ImageCreateInfo,
+			Extent = Extent,
+			Flags = Flags,
+			Format = Format,
+			Samples = Samples,
+			Tiling = Tiling,
+			Usage = Usage,
+			ArrayLayers = ArrayLayers,
+			ImageType = ImageType,
+			InitialLayout = InitialLayout,
+			MipLevels = MipLevels,
+			SharingMode = SharingMode,
+			QueueFamilyIndexCount = (uint)QueueFamilyIndices.Length,
+			PQueueFamilyIndices = resources.AllocateArray(QueueFamilyIndices)
+		}, resources);
 	}
 }

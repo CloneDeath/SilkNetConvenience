@@ -2,7 +2,7 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.CreateInfo.Images; 
 
-public class ImageViewCreateInformation {
+public class ImageViewCreateInformation : IGetCreateInfo<ImageViewCreateInfo> {
 	public Image Image;
 	public ComponentMapping Components;
 	public ImageViewCreateFlags Flags;
@@ -10,8 +10,9 @@ public class ImageViewCreateInformation {
 	public ImageSubresourceRange SubresourceRange;
 	public ImageViewType ViewType;
 
-	public ImageViewCreateInfo GetCreateInfo() {
-		return new ImageViewCreateInfo {
+	public ManagedResourceSet<ImageViewCreateInfo> GetCreateInfo() {
+		var resources = new ManagedResources();
+		return new ManagedResourceSet<ImageViewCreateInfo>(new ImageViewCreateInfo {
 			SType = StructureType.ImageViewCreateInfo,
 			Image = Image,
 			Components = Components,
@@ -19,6 +20,6 @@ public class ImageViewCreateInformation {
 			Format = Format,
 			SubresourceRange = SubresourceRange,
 			ViewType = ViewType
-		};
+		}, resources);
 	}
 }

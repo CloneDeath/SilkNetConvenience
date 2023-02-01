@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
@@ -31,5 +32,9 @@ public class VulkanSwapchain : BaseVulkanWrapper {
 	public VulkanSwapchainImage[] GetImages() {
 		var images = KhrSwapchain.GetSwapchainImages(Device, Swapchain);
 		return images.Select(i => new VulkanSwapchainImage(this, i)).ToArray();
+	}
+
+	public uint AcquireNextImage(TimeSpan? timeout = null, Semaphore semaphore = default, Fence fence = default) {
+		return KhrSwapchain.AcquireNextImage(Device, Swapchain, timeout, semaphore, fence);
 	}
 }

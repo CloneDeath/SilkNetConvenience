@@ -6,8 +6,8 @@ namespace SilkNetConvenience;
 
 public static unsafe class RenderPassExtensions {
 	public static RenderPass CreateRenderPass(this Vk vk, Device device, RenderPassCreateInformation createInfo) {
-		var info = createInfo.GetCreateInfo();
-		vk.CreateRenderPass(device, info, null, out var renderPass).AssertSuccess();
+		using var info = createInfo.GetCreateInfo();
+		vk.CreateRenderPass(device, info.Resource, null, out var renderPass).AssertSuccess();
 		return renderPass;
 	}
 	

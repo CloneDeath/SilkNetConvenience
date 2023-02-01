@@ -6,8 +6,8 @@ namespace SilkNetConvenience;
 
 public static unsafe class ImageExtensions {
 	public static Image CreateImage(this Vk vk, Device device, ImageCreateInformation createInfo) {
-		var info = createInfo.GetCreateInfo();
-		vk.CreateImage(device, info, null, out var image).AssertSuccess();
+		using var info = createInfo.GetCreateInfo();
+		vk.CreateImage(device, info.Resource, null, out var image).AssertSuccess();
 		return image;
 	}
 	

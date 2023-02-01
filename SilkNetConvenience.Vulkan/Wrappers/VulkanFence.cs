@@ -25,8 +25,7 @@ public class VulkanFence : BaseVulkanWrapper {
 	public static implicit operator Fence(VulkanFence self) => self.Fence;
 
 	public void Wait(TimeSpan? timeout = null) {
-		var timeoutNS = timeout.HasValue ? (ulong)timeout.Value.TotalMilliseconds * 1_000_000 : ulong.MaxValue;
-		Vk.WaitForFences(Device, 1, Fence, true, timeoutNS);
+		Vk.WaitForFences(Device, 1, Fence, true, timeout.GetTotalNanoSeconds());
 	}
 
 	public void Reset() {

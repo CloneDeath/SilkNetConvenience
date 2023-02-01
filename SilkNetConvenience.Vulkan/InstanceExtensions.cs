@@ -8,8 +8,8 @@ namespace SilkNetConvenience;
 
 public static unsafe class InstanceExtensions {
 	public static Instance CreateInstance(this Vk vk, InstanceCreateInformation createInfo) {
-		using var resources = createInfo.GetCreateInfo();
-		vk.CreateInstance(resources.Resource, null, out var instance).AssertSuccess();
+		using var info = createInfo.GetCreateInfo();
+		vk.CreateInstance(info.Resource, null, out var instance).AssertSuccess();
 		return instance;
 	}
 	

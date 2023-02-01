@@ -148,8 +148,8 @@ public static unsafe class DeviceExtensions {
 	}
 
 	public static Sampler CreateSampler(this Vk vk, Device device, SamplerCreateInformation createInfo) {
-		var info = createInfo.GetCreateInfo();
-		vk.CreateSampler(device, info, null, out var sampler).AssertSuccess();
+		using var info = createInfo.GetCreateInfo();
+		vk.CreateSampler(device, info.Resource, null, out var sampler).AssertSuccess();
 		return sampler;
 	}
 

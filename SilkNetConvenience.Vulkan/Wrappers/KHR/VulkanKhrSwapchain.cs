@@ -2,6 +2,7 @@ using System;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo.KHR;
+using SilkNetConvenience.Exceptions;
 
 namespace SilkNetConvenience.Wrappers.KHR; 
 
@@ -27,4 +28,8 @@ public class VulkanKhrSwapchain : BaseVulkanWrapper {
 	public static implicit operator KhrSwapchain(VulkanKhrSwapchain self) => self.KhrSwapchain;
 
 	public VulkanSwapchain CreateSwapchain(SwapchainCreateInformation createInfo) => new(this, createInfo);
+
+	public void QueuePresent(Queue queue, PresentInformation presentInfo) {
+		KhrSwapchain.QueuePresent(queue, presentInfo);
+	}
 }
