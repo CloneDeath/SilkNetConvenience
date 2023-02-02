@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.Barriers;
@@ -118,7 +119,7 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 		BindDescriptorSets(bindPoint, pipelineLayout, firstSet, new[] { descriptorSet }, offsets);
 	}
 	public void BindDescriptorSets(PipelineBindPoint pipelineBindPoint, PipelineLayout pipelineLayout, uint firstSet, 
-			VulkanDescriptorSet[] descriptorSets, uint[]? dynamicOffsets = null) {
+			IEnumerable<VulkanDescriptorSet> descriptorSets, uint[]? dynamicOffsets = null) {
 		var sets = descriptorSets.Select(s => s.DescriptorSet).ToArray();
 		BindDescriptorSets(pipelineBindPoint, pipelineLayout, firstSet, sets, dynamicOffsets);
 	}

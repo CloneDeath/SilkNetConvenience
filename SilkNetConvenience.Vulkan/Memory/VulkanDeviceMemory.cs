@@ -40,13 +40,15 @@ public class VulkanDeviceMemory : BaseVulkanWrapper {
 
 	public Span<T> MapMemory<T>(ulong? offset = null, ulong? size = null) where T : unmanaged {
 		var offsetUsed = offset ?? 0;
-		var sizeUsed = size ?? (Size - offsetUsed);
+		var calculatedSize = Size - offsetUsed;
+		var sizeUsed = size ?? calculatedSize;
 		return Vk.MapMemory<T>(Device, DeviceMemory, offsetUsed, sizeUsed);
 	}
 	
 	public Span<byte> MapMemory(ulong? offset = null, ulong? size = null) {
 		var offsetUsed = offset ?? 0;
-		var sizeUsed = size ?? (Size - offsetUsed);
+		var calculatedSize = Size - offsetUsed;
+		var sizeUsed = size ?? calculatedSize;
 		return Vk.MapMemory(Device, DeviceMemory, offsetUsed, sizeUsed);
 	}
 	

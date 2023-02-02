@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.Exceptions;
 
@@ -9,7 +10,7 @@ public static class QueueExtensions {
 		return queue;
 	}
 	
-	public static void QueueSubmit(this Vk vk, Queue queue, SubmitInformation[] submitInfos, Fence fence) {
+	public static void QueueSubmit(this Vk vk, Queue queue, IEnumerable<SubmitInformation> submitInfos, Fence fence) {
 		using var infos = submitInfos.GetCreateInfos();
 		vk.QueueSubmit(queue, infos.Resources, fence).AssertSuccess();
 	}

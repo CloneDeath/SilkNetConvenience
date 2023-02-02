@@ -4,7 +4,7 @@ using Silk.NET.Vulkan;
 namespace SilkNetConvenience.Buffers; 
 
 public class FramebufferCreateInformation : IGetCreateInfo<FramebufferCreateInfo> {
-	public Silk.NET.Vulkan.RenderPass RenderPass;
+	public RenderPass RenderPass;
 	public FramebufferCreateFlags Flags;
 	public uint Height;
 	public uint Layers;

@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Silk.NET.Vulkan;
-using SilkNetConvenience.Barriers;
 using SilkNetConvenience.CommandBuffers;
 using SilkNetConvenience.Devices;
 using SilkNetConvenience.Exceptions;
@@ -21,16 +21,10 @@ public class VulkanQueue {
 	
 	public static implicit operator Queue(VulkanQueue self) => self.Queue;
 
-	public void Submit(SubmitInformation submitInfo, VulkanFence? fence = null) {
-		Submit(new[]{submitInfo}, fence?.Fence ?? default);
-	}
 	public void Submit(SubmitInformation submitInfo, Fence fence = default) {
 		Submit(new[]{submitInfo}, fence);
 	}
-	public void Submit(SubmitInformation[] submitInfos, VulkanFence? fence = null) {
-		Submit(submitInfos, fence?.Fence ?? default);
-	}
-	public void Submit(SubmitInformation[] submitInfos, Fence fence = default) {
+	public void Submit(IEnumerable<SubmitInformation> submitInfos, Fence fence = default) {
 		Vk.QueueSubmit(Queue, submitInfos, fence);
 	}
 	public void Submit(params VulkanCommandBuffer[] commandBuffers) {

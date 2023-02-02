@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.Exceptions;
 
@@ -11,7 +12,9 @@ public static class DescriptorSetExtensions {
 		return results;
 	}
 
-	public static void UpdateDescriptorSets(this Vk vk, Device device, WriteDescriptorSetInformation[] writeInfos, CopyDescriptorSetInformation[] copyInfos) {
+	public static void UpdateDescriptorSets(this Vk vk, Device device, 
+											IEnumerable<WriteDescriptorSetInformation> writeInfos,
+											IEnumerable<CopyDescriptorSetInformation> copyInfos) {
 		using var wInfos = writeInfos.GetCreateInfos();
 		using var cInfos = copyInfos.GetCreateInfos();
 		vk.UpdateDescriptorSets(device, wInfos.Resources, cInfos.Resources);

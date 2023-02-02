@@ -1,7 +1,6 @@
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.Exceptions;
-using SilkNetConvenience.Images;
 
 namespace SilkNetConvenience.Devices; 
 

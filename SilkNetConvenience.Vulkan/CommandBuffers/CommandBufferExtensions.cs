@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Silk.NET.Vulkan;
 using SilkNetConvenience.Barriers;
 using SilkNetConvenience.Exceptions;
@@ -33,8 +34,10 @@ public static class CommandBufferExtensions {
 	}
 
 	public static unsafe void CmdPipelineBarrier(this Vk vk, CommandBuffer commandBuffer, PipelineStageFlags srcStageMask,
-		PipelineStageFlags dstStageMask, DependencyFlags dependencyFlags, MemoryBarrierInformation[] memoryBarriers,
-		BufferMemoryBarrierInformation[] bufferMemoryBarriers, ImageMemoryBarrierInformation[] imageMemoryBarriers) {
+		PipelineStageFlags dstStageMask, DependencyFlags dependencyFlags, 
+		IEnumerable<MemoryBarrierInformation> memoryBarriers,
+		IEnumerable<BufferMemoryBarrierInformation> bufferMemoryBarriers, 
+		IEnumerable<ImageMemoryBarrierInformation> imageMemoryBarriers) {
 
 		using var memory = memoryBarriers.GetCreateInfos();
 		using var buffer = bufferMemoryBarriers.GetCreateInfos();
