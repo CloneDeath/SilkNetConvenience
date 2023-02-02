@@ -53,10 +53,10 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 		});
 	}
 
-	public void CopyBuffer(VulkanBuffer source, VulkanBuffer destination, ulong size)
+	public void CopyBuffer(Buffer source, Buffer destination, ulong size)
 		=> CopyBuffer(source, destination, new BufferCopy { Size = size });
-	public void CopyBuffer(VulkanBuffer source, VulkanBuffer destination, params BufferCopy[] copies) {
-		Vk.CmdCopyBuffer(CommandBuffer, source.Buffer, destination.Buffer, copies);
+	public void CopyBuffer(Buffer source, Buffer destination, params BufferCopy[] copies) {
+		Vk.CmdCopyBuffer(CommandBuffer, source, destination, copies);
 	}
 
 	public void End() {

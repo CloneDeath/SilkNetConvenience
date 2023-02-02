@@ -9,8 +9,12 @@ public static class QueueExtensions {
 		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out var queue);
 		return queue;
 	}
-	
-	public static void QueueSubmit(this Vk vk, Queue queue, IEnumerable<SubmitInformation> submitInfos, Fence fence) {
+
+	public static void QueueSubmit(this Vk vk, Queue queue, params SubmitInformation[] submitInfos) {
+		vk.QueueSubmit(queue, submitInfos, default);
+	}
+
+	public static void QueueSubmit(this Vk vk, Queue queue, IEnumerable<SubmitInformation> submitInfos, Fence fence = default) {
 		using var infos = submitInfos.GetCreateInfos();
 		vk.QueueSubmit(queue, infos.Resources, fence).AssertSuccess();
 	}
