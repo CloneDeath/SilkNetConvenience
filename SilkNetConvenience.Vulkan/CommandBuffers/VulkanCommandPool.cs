@@ -29,7 +29,7 @@ public class VulkanCommandPool : BaseVulkanWrapper {
 		return new VulkanCommandBuffer(this, level);
 	}
 
-	public VulkanCommandBuffer[] AllocateCommandBuffers(uint count, CommandBufferLevel level) {
+	public VulkanCommandBuffer[] AllocateCommandBuffers(uint count, CommandBufferLevel level = CommandBufferLevel.Primary) {
 		var allocInfo = new CommandBufferAllocateInformation {
 			CommandPool = CommandPool,
 			CommandBufferCount = count,

@@ -97,13 +97,16 @@ public class VulkanDevice : BaseVulkanWrapper {
 
 	public PhysicalDeviceMemoryProperties GetMemoryProperties() => Vk.GetPhysicalDeviceMemoryProperties(PhysicalDevice);
 
-	private uint FindMemoryType(uint typeFilter, MemoryPropertyFlags properties) {
+	// From Vulkan Spec - https://registry.khronos.org/vulkan/specs/1.0/html/vkspec.html#memory-device
+	public uint FindMemoryType(uint typeFilter, MemoryPropertyFlags properties) {
 		var memoryProperties = Vk.GetPhysicalDeviceMemoryProperties(PhysicalDevice);
 
-		for (var i = 0; i < memoryProperties.MemoryTypeCount; i++) {
-			var memType = memoryProperties.MemoryTypes[i];
-			if ((typeFilter & (1 << i)) != 0 && (memType.PropertyFlags & properties) == properties) {
-				return (uint)i;
+		for (var memoryIndex = 0; memoryIndex < memoryProperties.MemoryTypeCount; memoryIndex++) {
+			var memType = memoryProperties.MemoryTypes[memoryIndex];
+			var isRequiredMemoryType = (typeFilter & (1 << memoryIndex)) != 0;
+			var hasRequiredProperties = (memType.PropertyFlags & properties) == properties;
+			if (isRequiredMemoryType && hasRequiredProperties) {
+				return (uint)memoryIndex;
 			}
 		}
 		throw new Exception("Failed to find a suitable memory location");
