@@ -22,7 +22,9 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public readonly Device Device;
 
 	public VulkanDevice(VulkanPhysicalDevice physicalDevice, DeviceCreateInformation createInfo)
-		: this(physicalDevice.Vk, physicalDevice.Instance, physicalDevice.PhysicalDevice, createInfo) { }
+		: this(physicalDevice.Vk, physicalDevice.Instance, physicalDevice.PhysicalDevice, createInfo) {
+		physicalDevice.AddChildResource(this);
+	}
 	public VulkanDevice(Vk vk, Instance instance, PhysicalDevice physicalDevice, DeviceCreateInformation createInfo) {
 		Vk = vk;
 		Instance = instance;
