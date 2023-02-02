@@ -25,7 +25,7 @@ public class VulkanCommandPool : BaseVulkanWrapper {
 	
 	public static implicit operator CommandPool(VulkanCommandPool self) => self.CommandPool;
 	
-	public VulkanCommandBuffer AllocateCommandBuffer(CommandBufferLevel level) {
+	public VulkanCommandBuffer AllocateCommandBuffer(CommandBufferLevel level = CommandBufferLevel.Primary) {
 		return new VulkanCommandBuffer(this, level);
 	}
 

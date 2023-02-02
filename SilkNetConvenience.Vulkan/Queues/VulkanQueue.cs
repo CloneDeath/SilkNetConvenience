@@ -27,12 +27,8 @@ public class VulkanQueue {
 	public void Submit(IEnumerable<SubmitInformation> submitInfos, Fence fence = default) {
 		Vk.QueueSubmit(Queue, submitInfos, fence);
 	}
-	public void Submit(params VulkanCommandBuffer[] commandBuffers) {
-		Vk.QueueSubmit(Queue, new SubmitInformation[] {
-			new() {
-				CommandBuffers = commandBuffers.Select(b => b.CommandBuffer).ToArray()
-			}
-		}, default);
+	public void Submit(params CommandBuffer[] commandBuffers) {
+		Vk.QueueSubmit(Queue,  new SubmitInformation { CommandBuffers = commandBuffers });
 	}
 
 	public void WaitIdle() {
