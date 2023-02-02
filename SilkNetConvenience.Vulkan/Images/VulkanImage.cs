@@ -17,8 +17,10 @@ public class VulkanImage : BaseVulkanWrapper {
 		Device = device;
 		Image = image;
 	}
-	
-	public VulkanImage(VulkanDevice device, ImageCreateInformation createInfo) : this(device.Vk, device.Device, createInfo){}
+
+	public VulkanImage(VulkanDevice device, ImageCreateInformation createInfo) : this(device.Vk, device.Device, createInfo) {
+		device.AddChildResource(this);
+	}
 	public VulkanImage(Vk vk, Device device, ImageCreateInformation createInfo) {
 		Vk = vk;
 		Device = device;
