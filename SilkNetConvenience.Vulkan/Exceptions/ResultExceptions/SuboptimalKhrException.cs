@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class SuboptimalKhrException : ResultFailureException { public SuboptimalKhrException() : base(Result.SuboptimalKhr){}}
+public class SuboptimalKhrException : VulkanResultException { public SuboptimalKhrException() : base(Result.SuboptimalKhr){}}

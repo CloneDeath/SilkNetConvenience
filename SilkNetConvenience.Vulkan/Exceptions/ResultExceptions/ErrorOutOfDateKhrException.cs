@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class ErrorOutOfDateKhrException : ResultFailureException { public ErrorOutOfDateKhrException() : base(Result.ErrorOutOfDateKhr){}}
+public class ErrorOutOfDateKhrException : VulkanResultException { public ErrorOutOfDateKhrException() : base(Result.ErrorOutOfDateKhr){}}

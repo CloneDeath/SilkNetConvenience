@@ -34,7 +34,8 @@ public class VulkanSwapchain : BaseVulkanWrapper {
 		return images.Select(i => new VulkanSwapchainImage(this, i)).ToArray();
 	}
 
-	public uint AcquireNextImage(TimeSpan? timeout = null, Semaphore semaphore = default, Fence fence = default) {
+	public uint AcquireNextImage(Semaphore semaphore) => AcquireNextImage(null, semaphore, default);
+	public uint AcquireNextImage(TimeSpan? timeout, Semaphore semaphore, Fence fence) {
 		return KhrSwapchain.AcquireNextImage(Device, Swapchain, timeout, semaphore, fence);
 	}
 }

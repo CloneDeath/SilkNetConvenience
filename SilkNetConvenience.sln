@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilkNetConvenience.Vulkan", "SilkNetConvenience.Vulkan\SilkNetConvenience.Vulkan.csproj", "{AE609BB3-41DC-4099-A626-5E572345E052}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilkNetConvenience.Assimp", "SilkNetConvenience.Assimp\SilkNetConvenience.Assimp.csproj", "{BC88AA8D-29C4-4E18-B47C-9D1168006A6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{AE609BB3-41DC-4099-A626-5E572345E052}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE609BB3-41DC-4099-A626-5E572345E052}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE609BB3-41DC-4099-A626-5E572345E052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC88AA8D-29C4-4E18-B47C-9D1168006A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC88AA8D-29C4-4E18-B47C-9D1168006A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC88AA8D-29C4-4E18-B47C-9D1168006A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC88AA8D-29C4-4E18-B47C-9D1168006A6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

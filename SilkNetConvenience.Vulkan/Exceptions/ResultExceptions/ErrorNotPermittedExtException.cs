@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class ErrorNotPermittedExtException : ResultFailureException { public ErrorNotPermittedExtException() : base(Result.ErrorNotPermittedExt){}}
+public class ErrorNotPermittedExtException : VulkanResultException { public ErrorNotPermittedExtException() : base(Result.ErrorNotPermittedExt){}}

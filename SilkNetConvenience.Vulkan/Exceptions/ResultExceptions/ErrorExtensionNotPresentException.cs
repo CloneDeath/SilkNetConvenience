@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class ErrorExtensionNotPresentException : ResultFailureException { public ErrorExtensionNotPresentException() : base(Result.ErrorExtensionNotPresent){}}
+public class ErrorExtensionNotPresentException : VulkanResultException { public ErrorExtensionNotPresentException() : base(Result.ErrorExtensionNotPresent){}}

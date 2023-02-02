@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class PipelineCompileRequiredExtException : ResultFailureException { public PipelineCompileRequiredExtException() : base(Result.PipelineCompileRequiredExt){}}
+public class PipelineCompileRequiredExtException : VulkanResultException { public PipelineCompileRequiredExtException() : base(Result.PipelineCompileRequiredExt){}}

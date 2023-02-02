@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class ErrorInitializationFailedException : ResultFailureException { public ErrorInitializationFailedException() : base(Result.ErrorInitializationFailed){}}
+public class ErrorInitializationFailedException : VulkanResultException { public ErrorInitializationFailedException() : base(Result.ErrorInitializationFailed){}}

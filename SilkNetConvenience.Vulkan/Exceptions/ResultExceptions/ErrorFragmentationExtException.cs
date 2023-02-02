@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class ErrorFragmentationExtException : ResultFailureException { public ErrorFragmentationExtException() : base(Result.ErrorFragmentationExt){}}
+public class ErrorFragmentationExtException : VulkanResultException { public ErrorFragmentationExtException() : base(Result.ErrorFragmentationExt){}}

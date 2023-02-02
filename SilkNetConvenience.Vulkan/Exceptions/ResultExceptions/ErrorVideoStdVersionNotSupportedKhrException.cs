@@ -2,4 +2,4 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions;
 
-public class ErrorVideoStdVersionNotSupportedKhrException : ResultFailureException { public ErrorVideoStdVersionNotSupportedKhrException() : base(Result.ErrorVideoStdVersionNotSupportedKhr){}}
+public class ErrorVideoStdVersionNotSupportedKhrException : VulkanResultException { public ErrorVideoStdVersionNotSupportedKhrException() : base(Result.ErrorVideoStdVersionNotSupportedKhr){}}

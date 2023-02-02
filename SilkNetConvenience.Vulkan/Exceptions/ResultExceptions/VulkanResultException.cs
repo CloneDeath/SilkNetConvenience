@@ -3,10 +3,10 @@ using Silk.NET.Vulkan;
 
 namespace SilkNetConvenience.Exceptions.ResultExceptions; 
 
-public abstract class ResultFailureException : Exception {
+public abstract class VulkanResultException : Exception {
 	public Result Result { get; }
 	
-	protected ResultFailureException(Result result) : base(result.ToString()) {
+	protected VulkanResultException(Result result) : base(result.ToString()) {
 		Result = result;
 	}
 }

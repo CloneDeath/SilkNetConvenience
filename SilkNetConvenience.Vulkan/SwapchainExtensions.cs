@@ -3,6 +3,7 @@ using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.KHR;
 using SilkNetConvenience.CreateInfo.KHR;
 using SilkNetConvenience.Exceptions;
+using SilkNetConvenience.Exceptions.ResultExceptions;
 
 namespace SilkNetConvenience; 
 
@@ -23,11 +24,14 @@ public static unsafe class SwapchainExtensions {
 	}
 	
 	public static uint AcquireNextImage(this KhrSwapchain khrSwapchain, Device device, SwapchainKHR swapchain,
-										TimeSpan? timeout = null, Semaphore semaphore = default, Fence fence = default) {
-		uint index = 0;
-		khrSwapchain.AcquireNextImage(device, swapchain, timeout.GetTotalNanoSeconds(), semaphore, fence,
-									  ref index).AssertSuccess();
-		return index;
+										TimeSpan? timeout, Semaphore semaphore, Fence fence) {
+		uint imageIndex = 0;
+		try {
+			khrSwapchain.AcquireNextImage(device, swapchain, timeout.GetTotalNanoSeconds(), semaphore, fence,
+										  ref imageIndex).AssertSuccess();
+		}
+		catch (SuboptimalKhrException){}
+		return imageIndex;
 	}
 	
 	public static void QueuePresent(this KhrSwapchain khrSwapchain, Queue queue, PresentInformation presentInfo) {
