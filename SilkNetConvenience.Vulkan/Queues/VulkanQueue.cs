@@ -9,12 +9,14 @@ namespace SilkNetConvenience.Queues;
 
 public class VulkanQueue {
 	public readonly Vk Vk;
+	public readonly Device Device;
 	public readonly Queue Queue;
 	
 	public VulkanQueue(VulkanDevice device, uint queueFamilyIndex, uint queueIndex)
 		: this(device.Vk, device.Device, queueFamilyIndex, queueIndex){ }
 	public VulkanQueue(Vk vk, Device device, uint queueFamilyIndex, uint queueIndex) {
 		Vk = vk;
+		Device = device;
 		vk.GetDeviceQueue(device, queueFamilyIndex, queueIndex, out Queue);
 	}
 	
