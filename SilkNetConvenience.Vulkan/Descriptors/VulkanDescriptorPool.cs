@@ -32,8 +32,9 @@ public class VulkanDescriptorPool : BaseVulkanWrapper {
 		Array.Fill(layouts, layout);
 		return AllocateDescriptorSets(layouts);
 	}
-	public VulkanDescriptorSet[] AllocateDescriptorSets(params VulkanDescriptorSetLayout[] descriptorSetLayouts)
-		=> AllocateDescriptorSets(descriptorSetLayouts.Select(d => d.DescriptorSetLayout).ToArray());
+
+	public VulkanDescriptorSet AllocateDescriptorSet(DescriptorSetLayout descriptorSetLayout) =>
+		AllocateDescriptorSets(descriptorSetLayout).First();
 	public VulkanDescriptorSet[] AllocateDescriptorSets(params DescriptorSetLayout[] descriptorSetLayouts) {
 		var results = Vk.AllocateDescriptorSets(Device, new DescriptorSetAllocateInformation {
 			DescriptorPool = DescriptorPool,

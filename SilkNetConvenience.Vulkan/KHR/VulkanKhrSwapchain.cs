@@ -9,7 +9,9 @@ public class VulkanKhrSwapchain : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Instance Instance;
 	public readonly Device Device;
-	public readonly KhrSwapchain KhrSwapchain;
+
+	private readonly KhrSwapchain? _khrSwapchain;
+	public KhrSwapchain KhrSwapchain => _khrSwapchain ?? throw new NotSupportedException("VK_KHR_swapchain extension not found.");
 
 	public VulkanKhrSwapchain(VulkanDevice device) : this(device.Vk, device.Instance, device.Device) {
 		device.AddChildResource(this);
@@ -18,8 +20,7 @@ public class VulkanKhrSwapchain : BaseVulkanWrapper {
 		Vk = vk;
 		Instance = instance;
 		Device = device;
-		KhrSwapchain = Vk.GetKhrSwapchainExtension(Instance, Device) 
-					   ?? throw new NotSupportedException("VK_KHR_swapchain extension not found.");
+		_khrSwapchain = Vk.GetKhrSwapchainExtension(Instance, Device);
 	}
 
 	protected override void ReleaseVulkanResources() { }

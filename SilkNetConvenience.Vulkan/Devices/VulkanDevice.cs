@@ -21,22 +21,26 @@ public class VulkanDevice : BaseVulkanWrapper {
 	public readonly PhysicalDevice PhysicalDevice;
 	public readonly Device Device;
 
+	public VulkanKhrSwapchain KhrSwapchain { get; }
+
 	public VulkanDevice(VulkanPhysicalDevice physicalDevice, DeviceCreateInformation createInfo)
-		: this(physicalDevice.Vk, physicalDevice.Instance, physicalDevice.PhysicalDevice, createInfo) { }
+		: this(physicalDevice.Vk, physicalDevice.Instance, physicalDevice.PhysicalDevice, createInfo) {
+		physicalDevice.AddChildResource(this);
+	}
+
 	public VulkanDevice(Vk vk, Instance instance, PhysicalDevice physicalDevice, DeviceCreateInformation createInfo) {
 		Vk = vk;
 		Instance = instance;
 		PhysicalDevice = physicalDevice;
 		Device = vk.CreateDevice(physicalDevice, createInfo);
+		KhrSwapchain = new VulkanKhrSwapchain(this);
 	}
 
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyDevice(Device);
 	}
-	
-	public static implicit operator Device(VulkanDevice self) => self.Device;
 
-	public VulkanKhrSwapchain GetKhrSwapchainExtension() => new(this);
+	public static implicit operator Device(VulkanDevice self) => self.Device;
 
 	public VulkanDeviceMemory AllocateMemoryFor(VulkanImage image, MemoryPropertyFlags flags) {
 		var memoryRequirements = image.GetMemoryRequirements();

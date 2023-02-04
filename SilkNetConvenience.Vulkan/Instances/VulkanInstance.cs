@@ -10,23 +10,27 @@ public class VulkanInstance : BaseVulkanWrapper {
 	public readonly Vk Vk;
 	public readonly Instance Instance;
 
+	public VulkanDebugUtils DebugUtils { get; }
+	public VulkanKhrSurface KhrSurface { get; }
+	public VulkanPhysicalDevice[] PhysicalDevices { get; }
+
 	public VulkanInstance(VulkanContext vk, InstanceCreateInformation createInfo) : this(vk.Vk, createInfo) {
 		vk.AddChildResource(this);
 	}
+
 	public VulkanInstance(Vk vk, InstanceCreateInformation createInfo) {
 		Vk = vk;
 		Instance = vk.CreateInstance(createInfo);
+		DebugUtils = new VulkanDebugUtils(this);
+		KhrSurface = new VulkanKhrSurface(this);
+		PhysicalDevices = Vk.EnumeratePhysicalDevices(Instance)
+				 .Select(p => new VulkanPhysicalDevice(this, p))
+				 .ToArray();
 	}
-	
+
 	protected override void ReleaseVulkanResources() {
 		Vk.DestroyInstance(Instance);
 	}
-	
-	public static implicit operator Instance(VulkanInstance self) => self.Instance;
 
-	public VulkanDebugUtils GetDebugUtilsExtension() => new(this);
-	public VulkanKhrSurface GetKhrSurfaceExtension() => new(this);
-	public VulkanPhysicalDevice[] EnumeratePhysicalDevices() => Vk.EnumeratePhysicalDevices(Instance)
-		.Select(p => new VulkanPhysicalDevice(this, p))
-		.ToArray();
+	public static implicit operator Instance(VulkanInstance self) => self.Instance;
 }
