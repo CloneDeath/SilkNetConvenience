@@ -47,4 +47,13 @@ public static class CommandBufferExtensions {
 			buffer.Length, buffer.ResourcesPointer,
 			image.Length, image.ResourcesPointer);
 	}
+	
+	public static void BlitImage(this Vk vk, CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, 
+						  Image dstImage, ImageLayout dstImageLayout, ImageBlit[] regions, Filter filter) {
+		vk.CmdBlitImage(commandBuffer,
+			srcImage, srcImageLayout,
+			dstImage, dstImageLayout,
+			(uint)regions.Length, regions,
+			filter);
+	}
 }

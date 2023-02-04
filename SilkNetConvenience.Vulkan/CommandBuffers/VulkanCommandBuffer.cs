@@ -161,4 +161,12 @@ public class VulkanCommandBuffer : BaseVulkanWrapper {
 	public void CopyBufferToImage(Buffer buffer, Image image, ImageLayout imageLayout, params BufferImageCopy[] regions) {
 		Vk.CmdCopyBufferToImage(CommandBuffer, buffer, image, imageLayout, (uint)regions.Length, regions);
 	}
+
+	public void BlitImage(Image srcImage, ImageLayout srcImageLayout, 
+						  Image dstImage, ImageLayout dstImageLayout, ImageBlit[] regions, Filter filter) {
+		Vk.CmdBlitImage(CommandBuffer,
+			srcImage, srcImageLayout,
+			dstImage, dstImageLayout,
+			regions, filter);
+	}
 }
