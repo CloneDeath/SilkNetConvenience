@@ -27,8 +27,6 @@ public class VulkanDescriptorPool : BaseVulkanWrapper {
 	
 	public static implicit operator DescriptorPool(VulkanDescriptorPool self) => self.DescriptorPool;
 
-	public VulkanDescriptorSet[] AllocateDescriptorSets(int count, VulkanDescriptorSetLayout layout) 
-		=> AllocateDescriptorSets(count, layout.DescriptorSetLayout);
 	public VulkanDescriptorSet[] AllocateDescriptorSets(int count, DescriptorSetLayout layout) {
 		var layouts = new DescriptorSetLayout[count];
 		Array.Fill(layouts, layout);
